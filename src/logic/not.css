@@ -1,0 +1,23 @@
+/**
+ * --not() — Boolean Negation
+ *
+ * Inverts a boolean value (switch variable). Works with values 0 and 1.
+ * Returns 1 if input is 0, returns 0 if input is 1.
+ *
+ * @param {number} --value - Switch variable (0 or 1)
+ * @returns {number} - Inverted value (0 or 1)
+ *
+ * @example
+ * .toggle {
+ *   --is-active: 1;
+ *   --is-inactive: --not(var(--is-active)); // 0
+ *   opacity: --not(var(--is-hidden));
+ * }
+ *
+ * @see https://css-tricks.com/logical-operations-with-css-variables/
+ */
+
+@function --not(--value <number>) returns <number> {
+  result: calc(1 - var(--value));
+}
+

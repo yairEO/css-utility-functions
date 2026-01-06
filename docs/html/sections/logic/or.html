@@ -1,0 +1,49 @@
+<section id="or" class="function-section">
+  <h1><a href="#or">--or()</a></h1>
+  <p class="function-description">
+    Logical OR operation. Returns 1 if at least one operand is 1, otherwise returns 0. Useful for fallback styling when any condition is met.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--a</code> <span style="color: var(--required-color);">(required)</span> — First switch variable (0 or 1).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--b</code> <span style="color: var(--required-color);">(required)</span> — Second switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.alert {
+  --is-error: 0;
+  --is-warning: 1;
+  display: block;
+  opacity: --or(var(--is-error), var(--is-warning));  /* 1 */
+}</code>
+    </div>
+    <div class="demo-box" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 OR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 OR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 OR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 OR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+    </div>
+  </div>
+</section>
+

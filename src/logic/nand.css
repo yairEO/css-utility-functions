@@ -1,0 +1,30 @@
+/**
+ * --nand() — Logical NAND Operation (NOT AND)
+ *
+ * Returns 0 if both operands are 1, otherwise returns 1.
+ * Combination of NOT and AND operations.
+ *
+ * Truth table:
+ * - 0 NAND 0 = 1
+ * - 0 NAND 1 = 1
+ * - 1 NAND 0 = 1
+ * - 1 NAND 1 = 0
+ *
+ * @param {number} --a - First switch variable (0 or 1)
+ * @param {number} --b - Second switch variable (0 or 1)
+ * @returns {number} - Result (0 or 1)
+ *
+ * @example
+ * .hide-when-both-active {
+ *   --feature-a: 1;
+ *   --feature-b: 1;
+ *   display: --nand(var(--feature-a), var(--feature-b));
+ * }
+ *
+ * @see https://css-tricks.com/logical-operations-with-css-variables/
+ */
+
+@function --nand(--a <number>, --b <number>) returns <number> {
+  result: calc(1 - var(--a) * var(--b));
+}
+

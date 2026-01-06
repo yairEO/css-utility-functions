@@ -1,0 +1,27 @@
+/**
+ * --poly-angle() — Polygon Vertex Angle
+ *
+ * Calculate the angle for a vertex in a regular polygon.
+ * Useful for creating polygon shapes with CSS transforms.
+ * Formula: (360deg / sides * index) - 90deg
+ *
+ * @param {number} --sides - Number of sides in polygon
+ * @param {number} --index - Vertex index (0-based), default: 0
+ * @returns {angle} - Angle in degrees
+ *
+ * @example
+ * .hexagon-vertex-0 {
+ *   transform: rotate(--poly-angle(6, 0));  // First vertex of hexagon
+ * }
+ * .pentagon-vertex-2 {
+ *   transform: rotate(--poly-angle(5, 2));  // Third vertex of pentagon
+ * }
+ */
+
+@function --poly-angle(
+  --sides <number>,
+  --index <number>: 0
+) returns <angle> {
+  result: calc(360deg / var(--sides) * var(--index) - 90deg);
+}
+

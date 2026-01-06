@@ -1,0 +1,30 @@
+/**
+ * --xor() — Exclusive OR Operation
+ *
+ * Returns 1 if exactly one operand is 1, otherwise returns 0.
+ * Uses subtraction squared to get absolute value: (a - b)²
+ *
+ * Truth table:
+ * - 0 XOR 0 = 0 (both same)
+ * - 0 XOR 1 = 1 (different)
+ * - 1 XOR 0 = 1 (different)
+ * - 1 XOR 1 = 0 (both same)
+ *
+ * @param {number} --a - First switch variable (0 or 1)
+ * @param {number} --b - Second switch variable (0 or 1)
+ * @returns {number} - Result (0 or 1)
+ *
+ * @example
+ * .highlight-when-different {
+ *   --user-theme: 1;
+ *   --system-theme: 0;
+ *   opacity: --xor(var(--user-theme), var(--system-theme));
+ * }
+ *
+ * @see https://css-tricks.com/logical-operations-with-css-variables/
+ */
+
+@function --xor(--a <number>, --b <number>) returns <number> {
+  result: calc((var(--a) - var(--b)) * (var(--a) - var(--b)));
+}
+

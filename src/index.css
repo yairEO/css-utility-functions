@@ -1,0 +1,55 @@
+/**
+ * CSS Utility Functions
+ *
+ * A collection of reusable CSS custom functions using the @function syntax.
+ * Import this file to use all utility functions in your project.
+ *
+ * ⚠️ Note: CSS @function is experimental. Check browser support before production use.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/@function
+ */
+
+/* Color Utilities */
+@import './colors/alpha.css';
+@import './colors/lighten.css';
+@import './colors/darken.css';
+@import './colors/saturate.css';
+@import './colors/desaturate.css';
+@import './colors/mix.css';
+@import './colors/contrast-text.css';
+@import './colors/grayscale.css';
+@import './colors/invert.css';
+@import './colors/complement.css';
+
+/* Spacing & Sizing */
+@import './spacing/space.css';
+@import './spacing/fluid.css';
+@import './spacing/ratio-height.css';
+
+/* Visual Effects */
+@import './effects/shadow.css';
+@import './effects/diagonal-lines.css';
+
+/* Layout Utilities */
+@import './layout/z-index.css';
+@import './layout/neg.css';
+
+/* Math Utilities */
+@import './math/lerp.css';
+@import './math/circle.css';
+@import './math/modular.css';
+@import './math/poly-angle.css';
+
+/* Unit Conversion */
+@import './units/to-rem.css';
+@import './units/to-px.css';
+
+/* Logic Operations */
+@import './logic/not.css';
+@import './logic/and.css';
+@import './logic/or.css';
+@import './logic/xor.css';
+@import './logic/nand.css';
+@import './logic/nor.css';
+@import './logic/xnor.css';
+

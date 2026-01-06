@@ -1,0 +1,66 @@
+<section id="complement" class="function-section">
+  <h1><a href="#complement">--complement()</a></h1>
+  <p class="function-description">
+    Get the complementary color (opposite on color wheel) by rotating hue 180 degrees. Uses OKLCH color space for accurate hue rotation.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+    </ul>
+  </div>
+  <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(2);">
+    Note: Achromatic colors (grays) have no hue, so their complement is unchanged.
+  </p>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.accent {
+  background: --complement(var(--primary-color));  // Blue's complement (orange)
+}
+
+.contrast-border {
+  border-color: --complement(var(--primary));
+}</code>
+    </div>
+    <style>
+      .complement-demo-blue { background: var(--primary-color); }
+      .complement-demo-blue-comp { background: --complement(var(--primary-color)); }
+      .complement-demo-green { background: #10b981; }
+      .complement-demo-green-comp { background: --complement(#10b981); }
+      .complement-demo-orange { background: #f59e0b; }
+      .complement-demo-orange-comp { background: --complement(#f59e0b); }
+    </style>
+    <div class="demo-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="demo-item">
+        <div class="color-demo complement-demo-blue"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">var(--primary-color)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-blue-comp"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--complement(var(--primary-color))</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-green"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">#10b981</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-green-comp"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--complement(#10b981)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-orange"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">#f59e0b</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-orange-comp"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--complement(#f59e0b)</div>
+      </div>
+    </div>
+  </div>
+</section>
+

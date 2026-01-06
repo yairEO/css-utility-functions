@@ -1,0 +1,48 @@
+<section id="modular" class="function-section">
+  <h1><a href="#modular">--modular()</a></h1>
+  <p class="function-description">
+    Calculate values using a modular scale (typographic ratio). Hides the pow calculation for creating consistent type scales.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--step</code> <span style="color: var(--required-color);">(required)</span> — Scale step (can be negative for smaller values).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--base</code> <span style="color: var(--optional-color);">(optional)</span> — Base value. Default: <code>1rem</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--ratio</code> <span style="color: var(--optional-color);">(optional)</span> — Scale ratio. Default: <code>1.25</code> (major third).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>:root {
+  --type-base: 1rem;
+  --type-ratio: 1.25;
+}
+
+h1 {
+  font-size: --modular(4, var(--type-base), var(--type-ratio));
+}
+
+small {
+  font-size: --modular(-1, var(--type-base), var(--type-ratio));
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(2);">
+      <div style="font-size: calc(1rem * pow(1.25, -1)); color: var(--muted-text-color);">Step -1: Smaller</div>
+      <div style="font-size: calc(1rem * pow(1.25, 0));">Step 0: Base (1rem)</div>
+      <div style="font-size: calc(1rem * pow(1.25, 1)); font-weight: 600;">Step 1: 1.25rem</div>
+      <div style="font-size: calc(1rem * pow(1.25, 2)); font-weight: 600;">Step 2: 1.5625rem</div>
+      <div style="font-size: calc(1rem * pow(1.25, 3)); font-weight: 600;">Step 3: 1.953125rem</div>
+      <div style="font-size: calc(1rem * pow(1.25, 4)); font-weight: 600;">Step 4: 2.44140625rem</div>
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,32 @@
+/**
+ * --modular() — Modular Scale (Typographic Scale)
+ *
+ * Calculate values using a modular scale (typographic ratio).
+ * Hides the pow calculation: base * pow(ratio, step)
+ *
+ * @param {number} --step - Scale step (can be negative for smaller values)
+ * @param {length|number} --base - Base value, default: 1rem
+ * @param {number} --ratio - Scale ratio, default: 1.25 (major third)
+ * @returns {length|number} - Scaled value
+ *
+ * @example
+ * :root {
+ *   --type-base: 1rem;
+ *   --type-ratio: 1.25;
+ * }
+ * h1 {
+ *   font-size: --modular(4, var(--type-base), var(--type-ratio));  // Large scale
+ * }
+ * small {
+ *   font-size: --modular(-1, var(--type-base), var(--type-ratio));  // Smaller
+ * }
+ */
+
+@function --modular(
+  --step <number>,
+  --base <length|number>: 1rem,
+  --ratio <number>: 1.25
+) returns <length|number> {
+  result: calc(var(--base) * pow(var(--ratio), var(--step)));
+}
+

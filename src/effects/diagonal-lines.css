@@ -1,0 +1,58 @@
+/**
+ * --diagonal-lines() — Diagonal Line Pattern Background
+ *
+ * Generate a repeating diagonal line pattern with configurable angle, colors, and spacing.
+ * Returns a complete repeating-linear-gradient that can be used directly as a background value.
+ *
+ * @param {angle} --angle - Angle of the lines, default: -45deg
+ * @param {color} --line-color - Color of the lines, default: currentColor
+ * @param {length} --line-width - Width of each line, default: 1px
+ * @param {length} --gap-width - Width of the gap between lines, default: 4px
+ * @param {color} --gap-color - Color of the gap (background), default: transparent
+ * @returns {image} - Complete repeating-linear-gradient value
+ *
+ * Related - https://stackoverflow.com/questions/33091401/background-image-linear-gradient-jagged-edged-result-needs-to-be-smooth-edged
+ *
+ * @example
+ * .bg-diagonal {
+ *   background: --diagonal-lines();
+ * }
+ *
+ * @example
+ * .custom-stripes {
+ *   background: --diagonal-lines(
+ *     --angle: 45deg,
+ *     --line-color: #3b82f6,
+ *     --line-width: 2px,
+ *     --gap-width: 8px
+ *   );
+ * }
+ *
+ * @example
+ * .subtle-pattern {
+ *   color: #94a3b8;
+ *   background: --diagonal-lines(
+ *     --line-color: currentColor,
+ *     --line-width: 1px,
+ *     --gap-width: 10px
+ *   );
+ * }
+ */
+
+@function --diagonal-lines(
+  --angle <angle>: -45deg,
+  --line-color <color>: currentColor,
+  --line-width <length>: 1px,
+  --gap-width <length>: 4px,
+  --gap-color <color>: transparent
+) returns <image> {
+  result: repeating-linear-gradient(
+    var(--angle),
+    var(--line-color) 0,
+    var(--line-color) calc(var(--line-width) - 1px),
+    var(--gap-color) calc(var(--line-width) + 1px),
+    var(--gap-color) calc(var(--line-width) + var(--gap-width))
+  );
+}
+
+

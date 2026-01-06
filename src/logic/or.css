@@ -1,0 +1,30 @@
+/**
+ * --or() — Logical OR Operation
+ *
+ * Returns 1 if at least one operand is 1, otherwise returns 0.
+ * Uses De Morgan's law: NOT (A OR B) = (NOT A) AND (NOT B)
+ *
+ * Truth table:
+ * - 0 OR 0 = 0
+ * - 0 OR 1 = 1
+ * - 1 OR 0 = 1
+ * - 1 OR 1 = 1
+ *
+ * @param {number} --a - First switch variable (0 or 1)
+ * @param {number} --b - Second switch variable (0 or 1)
+ * @returns {number} - Result (0 or 1)
+ *
+ * @example
+ * .show-on-mobile-or-tablet {
+ *   --is-mobile: 0;
+ *   --is-tablet: 1;
+ *   display: --or(var(--is-mobile), var(--is-tablet));
+ * }
+ *
+ * @see https://css-tricks.com/logical-operations-with-css-variables/
+ */
+
+@function --or(--a <number>, --b <number>) returns <number> {
+  result: calc(1 - (1 - var(--a)) * (1 - var(--b)));
+}
+

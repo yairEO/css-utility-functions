@@ -1,0 +1,44 @@
+<section id="circle" class="function-section">
+  <h1><a href="#circle">--circle-x() / --circle-y()</a></h1>
+  <p class="function-description">
+    Calculate X and Y coordinates on a circle using radius and angle. Uses cosine for X and sine for Y positions.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--radius</code> <span style="color: var(--required-color);">(required)</span> — Circle radius.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--angle</code> <span style="color: var(--optional-color);">(optional)</span> — Angle in degrees. Default: <code>0deg</code>.
+      </li>
+    </ul>
+  </div>
+  <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(2);">
+    Both <code>--circle-x()</code> and <code>--circle-y()</code> use the same parameters. <code>--circle-x()</code> uses cosine, <code>--circle-y()</code> uses sine.
+  </p>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.orbit {
+  left: calc(50% + --circle-x(100px, 45deg));  /* 45° X position */
+  top: calc(50% + --circle-y(100px, 45deg));   /* 45° Y position */
+}</code>
+    </div>
+    <div class="demo-box" style="position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+      <div style="position: relative; width: 200px; height: 200px; border: 2px dashed var(--primary-color); border-radius: 50%;">
+        <div style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%; transform: translate(-50%, -50%);"></div>
+        <div style="position: absolute; top: calc(50% - 4px + calc(100px * sin(45deg))); left: calc(50% - 4px + calc(100px * cos(45deg))); width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>
+        <div style="position: absolute; top: calc(50% - 4px + calc(100px * sin(90deg))); left: calc(50% - 4px + calc(100px * cos(90deg))); width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;"></div>
+        <div style="position: absolute; top: calc(50% - 4px + calc(100px * sin(180deg))); left: calc(50% - 4px + calc(100px * cos(180deg))); width: 8px; height: 8px; background: #ef4444; border-radius: 50%;"></div>
+        <div style="position: absolute; top: calc(50% - 4px + calc(100px * sin(270deg))); left: calc(50% - 4px + calc(100px * cos(270deg))); width: 8px; height: 8px; background: #8b5cf6; border-radius: 50%;"></div>
+      </div>
+      <div style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; font-size: 0.875rem; color: var(--muted-text-color);">
+        <div>Green: 45°, Orange: 90°, Red: 180°, Purple: 270°</div>
+      </div>
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,32 @@
+<section id="to-px" class="function-section">
+  <h1><a href="#to-px">--to-px()</a></h1>
+  <p class="function-description">
+    Convert a rem value to pixels (assumes 16px base). Useful when you need pixel values for legacy systems or specific calculations.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--rem</code> <span style="color: var(--required-color);">(required)</span> — REM value (unitless).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.legacy-system {
+  width: --to-px(10);   /* 160px */
+  height: --to-px(5);   /* 80px */
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(3);">
+      <div style="font-size: 0.875rem;">1rem = 16px</div>
+      <div style="font-size: 0.875rem;">2rem = 32px</div>
+      <div style="font-size: 0.875rem;">5rem = 80px</div>
+      <div style="font-size: 0.875rem;">10rem = 160px</div>
+    </div>
+  </div>
+</section>
+

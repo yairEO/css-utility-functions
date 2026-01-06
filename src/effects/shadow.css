@@ -1,0 +1,30 @@
+/**
+ * --shadow() — Elevation Shadows
+ *
+ * Generates layered box-shadows based on elevation level (1-5).
+ *
+ * @param {number} --level - Elevation level (1-5)
+ * @param {color} --color - Shadow color, default: oklch(0% 0 0 / 0.1)
+ * @returns {string} - Layered box-shadow value (comma-separated shadow list)
+ *
+ * @example
+ * .card {
+ *   box-shadow: --shadow(2);
+ * }
+ * .modal {
+ *   box-shadow: --shadow(5, oklch(0% 0 0 / 0.25));
+ * }
+ */
+
+@function --shadow(
+  --level <number>,
+  --color <color>: oklch(0% 0 0 / 0.1)
+) {
+  --y: calc(var(--level) * 2px);
+  --blur: calc(var(--level) * 4px);
+  --spread: calc(var(--level) * -1px);
+  result:
+    0 var(--y) var(--blur) var(--spread) var(--color),
+    0 calc(var(--y) * 0.5) calc(var(--blur) * 0.5) calc(var(--spread) * 0.5) var(--color);
+}
+

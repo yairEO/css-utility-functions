@@ -1,0 +1,48 @@
+<section id="xor" class="function-section">
+  <h1><a href="#xor">--xor()</a></h1>
+  <p class="function-description">
+    Exclusive OR operation. Returns 1 if exactly one operand is 1 (they differ), otherwise returns 0. Useful for detecting state changes or differences.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--a</code> <span style="color: var(--required-color);">(required)</span> — First switch variable (0 or 1).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--b</code> <span style="color: var(--required-color);">(required)</span> — Second switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.highlight-when-different {
+  --user-theme: 1;
+  --system-theme: 0;
+  opacity: --xor(var(--user-theme), var(--system-theme));  /* 1 */
+}</code>
+    </div>
+    <div class="demo-box" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 XOR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 XOR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 XOR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 XOR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+    </div>
+  </div>
+</section>
+

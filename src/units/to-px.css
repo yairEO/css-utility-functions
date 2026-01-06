@@ -1,0 +1,19 @@
+/**
+ * --to-px() — REM to Pixel Conversion
+ *
+ * Convert a rem value to pixels (assumes 16px base).
+ *
+ * @param {number} --rem - REM value (unitless)
+ * @returns {length} - Pixel value
+ *
+ * @example
+ * .legacy-system {
+ *   width: --to-px(10);
+ *   height: --to-px(5);
+ * }
+ */
+
+@function --to-px(--rem <number>) returns <length> {
+  result: calc(var(--rem) * 16 * 1px);
+}
+

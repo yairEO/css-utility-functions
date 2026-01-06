@@ -1,0 +1,30 @@
+/**
+ * --and() — Logical AND Operation
+ *
+ * Returns 1 if both operands are 1, otherwise returns 0.
+ * Uses multiplication since any value multiplied by 0 equals 0.
+ *
+ * Truth table:
+ * - 0 AND 0 = 0
+ * - 0 AND 1 = 0
+ * - 1 AND 0 = 0
+ * - 1 AND 1 = 1
+ *
+ * @param {number} --a - First switch variable (0 or 1)
+ * @param {number} --b - Second switch variable (0 or 1)
+ * @returns {number} - Result (0 or 1)
+ *
+ * @example
+ * .visible-on-mobile-and-dark {
+ *   --is-mobile: 1;
+ *   --is-dark-mode: 1;
+ *   display: --and(var(--is-mobile), var(--is-dark-mode));
+ * }
+ *
+ * @see https://css-tricks.com/logical-operations-with-css-variables/
+ */
+
+@function --and(--a <number>, --b <number>) returns <number> {
+  result: calc(var(--a) * var(--b));
+}
+

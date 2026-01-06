@@ -1,0 +1,39 @@
+<section id="to-rem" class="function-section">
+  <h1><a href="#to-rem">--to-rem()</a></h1>
+  <p class="function-description">
+    Convert a pixel value to rem units. Base pixel size defaults to --rem-base (or 16px). Useful for converting legacy pixel-based designs to rem-based responsive layouts.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--px</code> <span style="color: var(--required-color);">(required)</span> — Pixel value (unitless).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--base</code> <span style="color: var(--optional-color);">(optional)</span> — Base pixel size for conversion. Defaults to <code>var(--rem-base, 16)</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.legacy-compat {
+  font-size: --to-rem(18);  /* 1.125rem */
+  padding: --to-rem(24);    /* 1.5rem */
+}
+
+.custom-base {
+  font-size: --to-rem(18, 10);  /* Custom base */
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(3);">
+      <div style="font-size: calc(16 * 1rem / 16);">16px = 1rem</div>
+      <div style="font-size: calc(18 * 1rem / 16);">18px = 1.125rem</div>
+      <div style="font-size: calc(24 * 1rem / 16);">24px = 1.5rem</div>
+      <div style="font-size: calc(32 * 1rem / 16);">32px = 2rem</div>
+    </div>
+  </div>
+</section>
+

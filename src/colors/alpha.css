@@ -1,0 +1,27 @@
+/**
+ * --alpha() — Color Transparency
+ *
+ * Creates a semi-transparent version of any color.
+ * Works exactly like CSS opacity property:
+ * - 0 = fully transparent (invisible)
+ * - 1 = fully opaque (solid)
+ * - 0.5 = 50% opaque (50% transparent)
+ *
+ * @param {color} --color - The base color
+ * @param {number} --opacity - Opacity level (0-1), default: 0.5
+ *   Higher values = more opaque, lower values = more transparent
+ * @returns {color} - Color with applied opacity
+ *
+ * @example
+ * .overlay {
+ *   background: --alpha(#6366f1, 0.2);  // 20% opaque, 80% transparent
+ * }
+ * .backdrop {
+ *   background: --alpha(var(--brand), 0.85);  // 85% opaque, 15% transparent
+ * }
+ */
+
+@function --alpha(--color <color>, --opacity <number>: 0.5) returns <color> {
+  result: oklch(from var(--color) l c h / var(--opacity));
+}
+

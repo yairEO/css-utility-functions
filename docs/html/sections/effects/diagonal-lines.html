@@ -1,0 +1,104 @@
+<section id="diagonal-lines" class="function-section">
+  <h1><a href="#diagonal-lines">--diagonal-lines()</a></h1>
+  <p class="function-description">
+    Generate a repeating diagonal line pattern with configurable angle, colors, and spacing. Returns a complete repeating-linear-gradient that can be used directly as a background value.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--angle</code> <span style="color: var(--optional-color);">(optional)</span> — Angle of the lines. Default: <code>-45deg</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--line-color</code> <span style="color: var(--optional-color);">(optional)</span> — Color of the lines. Default: <code>currentColor</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--line-width</code> <span style="color: var(--optional-color);">(optional)</span> — Width of each line. Default: <code>1px</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--gap-width</code> <span style="color: var(--optional-color);">(optional)</span> — Width of the gap between lines. Default: <code>4px</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--gap-color</code> <span style="color: var(--optional-color);">(optional)</span> — Color of the gap (background). Default: <code>transparent</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Interactive Demo</h3>
+    <div class="code-block">
+      <code>.bg-diagonal {
+  background: --diagonal-lines(
+    --angle: <span id="angle-val">-45</span>deg,
+    --line-color: <span id="line-color-val">#3b82f6</span>,
+    --line-width: <span id="line-width-val">1</span>px,
+    --gap-width: <span id="gap-width-val">4</span>px,
+    --gap-color: <span id="gap-color-val">transparent</span>
+  );
+}</code>
+    </div>
+    <div id="demo" style="height: 150px; background: repeating-linear-gradient(-45deg, #3b82f6 0, #3b82f6 1px, transparent 1px, transparent 5px); border-radius: 4px; margin-bottom: 1rem;"></div>
+    <div style="display: grid; gap: 0.75rem; font-size: 0.875rem;">
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Angle:</span>
+        <input type="range" id="angle" min="-180" max="180" value="-45" style="flex: 1;">
+        <span style="min-width: 50px; text-align: right;" id="angle-display">-45°</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Line Color:</span>
+        <input type="color" id="line-color" value="#3b82f6" style="width: 50px; height: 30px;">
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Line Width:</span>
+        <input type="range" id="line-width" min="1" max="10" value="1" style="flex: 1;">
+        <span style="min-width: 50px; text-align: right;" id="line-width-display">1px</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Gap Width:</span>
+        <input type="range" id="gap-width" min="2" max="20" value="4" style="flex: 1;">
+        <span style="min-width: 50px; text-align: right;" id="gap-width-display">4px</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Gap Color:</span>
+        <input type="color" id="gap-color" value="#ffffff" style="width: 50px; height: 30px;">
+        <input type="checkbox" id="transparent" checked style="margin-left: 0.5rem;">
+        <span>Transparent</span>
+      </label>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const demo = document.getElementById('demo');
+  const angle = document.getElementById('angle');
+  const lineColor = document.getElementById('line-color');
+  const lineWidth = document.getElementById('line-width');
+  const gapWidth = document.getElementById('gap-width');
+  const gapColor = document.getElementById('gap-color');
+  const transparent = document.getElementById('transparent');
+
+  function update() {
+    const a = angle.value;
+    const lc = lineColor.value;
+    const lw = lineWidth.value;
+    const gw = gapWidth.value;
+    const gc = transparent.checked ? 'transparent' : gapColor.value;
+
+    demo.style.background = `repeating-linear-gradient(${a}deg, ${lc} 0, ${lc} ${lw}px, ${gc} ${lw}px, ${gc} ${+lw + +gw}px)`;
+
+    document.getElementById('angle-val').textContent = a;
+    document.getElementById('angle-display').textContent = a + '°';
+    document.getElementById('line-color-val').textContent = lc;
+    document.getElementById('line-width-val').textContent = lw;
+    document.getElementById('line-width-display').textContent = lw + 'px';
+    document.getElementById('gap-width-val').textContent = gw;
+    document.getElementById('gap-width-display').textContent = gw + 'px';
+    document.getElementById('gap-color-val').textContent = gc;
+  }
+
+  angle.oninput = lineColor.oninput = lineWidth.oninput = gapWidth.oninput = gapColor.oninput = transparent.onchange = update;
+})();
+</script>
+

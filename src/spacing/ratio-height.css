@@ -1,0 +1,29 @@
+/**
+ * --ratio-height() — Aspect Ratio Height
+ *
+ * Calculate height from width and aspect ratio (useful for images/containers).
+ *
+ * @param {length} --width - Element width
+ * @param {number} --ratio-w - Ratio width part, default: 16
+ * @param {number} --ratio-h - Ratio height part, default: 9
+ * @returns {length} - Calculated height
+ *
+ * @example
+ * .video-thumb {
+ *   width: 320px;
+ *   height: --ratio-height(320px, 16, 9);
+ * }
+ * .square-avatar {
+ *   width: 48px;
+ *   height: --ratio-height(48px, 1, 1);
+ * }
+ */
+
+@function --ratio-height(
+  --width <length>,
+  --ratio-w <number>: 16,
+  --ratio-h <number>: 9
+) returns <length> {
+  result: calc(var(--width) * var(--ratio-h) / var(--ratio-w));
+}
+

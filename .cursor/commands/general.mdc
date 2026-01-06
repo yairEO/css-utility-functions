@@ -1,0 +1,14 @@
+---
+alwaysApply: true
+---
+
+- When a `.css` files in `./src` folder is changed or moved, always update the matching HTML section in `./docs/sections` and update the README file accordingly
+- After every change in the `./src` files, sync the `./docs/partials/sidebar.html` accordingly
+- For any folders changes (new folder, move, rename) also make a matching change in `./docs/sections` folder
+- When dealing with color manipulation, always use `oklch`
+- When creating a CSS function, think in terms of "theme" and how will this function work within a customizable theme with possible global defaults. Example:
+```
+@function --space(--multiplier <number>, --base <length>: var(--space-base, 0.25rem)) returns <length> {
+  result: calc(var(--base) * var(--multiplier));
+}
+```

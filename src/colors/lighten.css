@@ -1,0 +1,20 @@
+/**
+ * --lighten() — Color Luminance Increase
+ *
+ * Adjust a color's lightness upward.
+ * Uses OKLCH lightness channel (0-1 range).
+ *
+ * @param {color} --color - The base color
+ * @param {number} --amount - Amount to lighten (0-1, e.g., 0.1 = 10%, 0.2 = 20%), default: 0.1
+ * @returns {color} - Lightened color
+ *
+ * @example
+ * .btn:hover {
+ *   background: --lighten(var(--btn-bg), 0.15);
+ * }
+ */
+
+@function --lighten(--color <color>, --amount <number>: 0.1) returns <color> {
+  result: oklch(from var(--color) calc(l + var(--amount)) c h);
+}
+

@@ -1,0 +1,21 @@
+/**
+ * --neg() — Negative Value
+ *
+ * Simple negation — useful in calc-heavy layouts.
+ *
+ * @param {length} --value - Value to negate
+ * @returns {length} - Negative value
+ *
+ * @example
+ * .pull-up {
+ *   margin-top: --neg(var(--header-height));
+ * }
+ * .bleed {
+ *   margin-inline: --neg(var(--container-padding));
+ * }
+ */
+
+@function --neg(--value <length>) returns <length> {
+  result: calc(var(--value) * -1);
+}
+

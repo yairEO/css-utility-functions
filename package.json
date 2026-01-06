@@ -1,0 +1,47 @@
+{
+  "name": "css-utility-functions",
+  "version": "1.0.0",
+  "description": "A collection of reusable CSS custom native functions using the @function syntax",
+  "main": "dist/index.css",
+  "style": "dist/index.css",
+  "files": [
+    "dist/**/*.css",
+    "src/**/*.css",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "postcss src/index.css -o dist/index.css",
+    "build:min": "postcss src/index.css -o dist/index.min.css --env production",
+    "build:html": "node build-html.js",
+    "build:all": "npm run build:html && npm run build && npm run build:min",
+    "watch": "nodemon --watch src --ext css --exec \"npm run build\"",
+    "watch:html": "node build-html.js --watch",
+    "dev": "concurrently \"npm run watch:html\" \"npm run watch\"",
+    "prebuild": "npm run build:html"
+  },
+  "keywords": [
+    "css",
+    "css-functions",
+    "utility",
+    "design-system",
+    "css-custom-functions",
+    "@function"
+  ],
+  "author": "Yair Even-Or <vsync.design@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yairEO/css-utility-functions.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yaireo/css-utility-functions/issues"
+  },
+  "devDependencies": {
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0",
+    "cssnano": "^7.1.2",
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.0"
+  }
+}
+

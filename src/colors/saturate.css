@@ -1,0 +1,22 @@
+/**
+ * --saturate() — Color Saturation Increase
+ *
+ * Adjust a color's chroma (saturation) intensity upward.
+ *
+ * @param {color} --color - The base color
+ * @param {number} --amount - Percentage as decimal (e.g., 0.4 = 40%), default: 0.2
+ * @returns {color} - More saturated color
+ *
+ * @example
+ * .vibrant {
+ *   background: --saturate(var(--primary), 0.4);
+ * }
+ */
+
+@function --saturate(
+  --color <color>,
+  --amount <number>: 0.2
+) returns <color> {
+  result: oklch(from var(--color) l calc(c + c * var(--amount)) h);
+}
+

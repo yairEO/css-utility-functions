@@ -1,0 +1,39 @@
+<section id="neg" class="function-section">
+  <h1><a href="#neg">--neg()</a></h1>
+  <p class="function-description">
+    Simple negation — useful in calc-heavy layouts. Negates any length value, making it negative.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--value</code> <span style="color: var(--required-color);">(required)</span> — Value to negate.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Bleed Effect</h3>
+    <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-bottom: --space(2);">
+      Extend content beyond container padding using negative margins.
+    </p>
+    <div class="code-block">
+      <code>.full-bleed {
+  margin-inline: --neg(var(--container-padding));
+}</code>
+    </div>
+    <div class="demo-box" style="background: var(--bg-secondary); border: 2px dashed var(--border-color); border-radius: 8px; padding: --space(6); margin: --space(4) 0;">
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(4); border-radius: 4px; margin-bottom: --space(4);">
+        <div style="font-weight: 600; margin-bottom: --space(1);">Normal Content</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Respects container padding</div>
+      </div>
+      <div style="background: var(--primary-color); color: white; padding: --space(4); border-radius: 4px; margin-inline: --neg(--space(6));">
+        <div style="font-weight: 600; margin-bottom: --space(1);">Full Bleed Content</div>
+        <div style="font-size: 0.875rem; opacity: 0.9;">margin-inline: --neg(--space(6))</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+

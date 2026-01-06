@@ -1,0 +1,22 @@
+/**
+ * --invert() — Color Inversion
+ *
+ * Invert a color by flipping its lightness in OKLCH space.
+ * Dark colors become light, light colors become dark.
+ *
+ * @param {color} --color - The base color
+ * @returns {color} - Inverted color
+ *
+ * @example
+ * .inverted {
+ *   background: --invert(#ffffff);  // White becomes black
+ * }
+ * .dark-mode-text {
+ *   color: --invert(var(--light-text));
+ * }
+ */
+
+@function --invert(--color <color>) returns <color> {
+  result: oklch(from var(--color) calc(1 - l) c h);
+}
+

@@ -1,0 +1,72 @@
+/**
+ * --fluid() — Fluid Viewport-Based Sizing
+ *
+ * Generates a clamp() value that scales smoothly between viewport widths.
+ * Use this for global, viewport-dependent responsive sizing.
+ *
+ * @param {length} --min - Minimum size
+ * @param {length} --max - Maximum size
+ * @param {length} --min-vw - Minimum viewport width, default: 375px
+ * @param {length} --max-vw - Maximum viewport width, default: 1440px
+ * @returns {length} - Fluid clamp value based on viewport width
+ *
+ * @example
+ * h1 {
+ *   font-size: --fluid(1.5rem, 4rem);
+ * }
+ * .container {
+ *   padding: --fluid(1rem, 3rem, 320px, 1200px);
+ * }
+ *
+ * @see --fluid-container() for container-based fluid sizing
+ */
+
+@function --fluid(
+  --min <length>,
+  --max <length>,
+  --min-vw <length>: 375px,
+  --max-vw <length>: 1440px
+) returns <length> {
+  --slope: calc((var(--max) - var(--min)) / (var(--max-vw) - var(--min-vw)));
+  --intercept: calc(var(--min) - var(--slope) * var(--min-vw));
+  result: clamp(var(--min), calc(var(--intercept) + var(--slope) * 100vw), var(--max));
+}
+
+/**
+ * --fluid-container() — Fluid Container-Based Sizing
+ *
+ * Generates a clamp() value that scales smoothly based on container width.
+ * Requires the parent element to have container-type: inline-size or container: name / inline-size.
+ * Perfect for component-level responsive design independent of viewport size.
+ *
+ * @param {length} --min - Minimum size
+ * @param {length} --max - Maximum size
+ * @param {length} --min-cqw - Minimum container width, default: 20ch
+ * @param {length} --max-cqw - Maximum container width, default: 65ch
+ * @returns {length} - Fluid clamp value based on container width
+ *
+ * @example
+ * .card {
+ *   container-type: inline-size;
+ * }
+ *
+ * .card h2 {
+ *   font-size: --fluid-container(1rem, 2rem);
+ * }
+ *
+ * .card p {
+ *   font-size: --fluid-container(0.875rem, 1.125rem, 30ch, 60ch);
+ * }
+ */
+
+@function --fluid-container(
+  --min <length>,
+  --max <length>,
+  --min-cqw <length>: 20ch,
+  --max-cqw <length>: 65ch
+) returns <length> {
+  --slope: calc((var(--max) - var(--min)) / (var(--max-cqw) - var(--min-cqw)));
+  --intercept: calc(var(--min) - var(--slope) * var(--min-cqw));
+  result: clamp(var(--min), calc(var(--intercept) + var(--slope) * 100cqw), var(--max));
+}
+

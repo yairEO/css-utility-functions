@@ -1,0 +1,57 @@
+<section id="mix" class="function-section">
+  <h1><a href="#mix">--mix()</a></h1>
+  <p class="function-description">
+    Blend two colors by a given percentage. The weight parameter determines how much of the first color to use (50% = equal mix).
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color1</code> <span style="color: var(--required-color);">(required)</span> — First color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color2</code> <span style="color: var(--required-color);">(required)</span> — Second color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--weight</code> <span style="color: var(--optional-color);">(optional)</span> — Weight of first color. Default: <code>50%</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.gradient-mid {
+  background: --mix(var(--start), var(--end), 50%);
+}
+
+.tinted {
+  background: --mix(white, var(--brand), 90%);  /* 90% white, 10% brand */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: var(--primary-color);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Color 1</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: color-mix(in oklch, var(--primary-color) 25%, #10b981);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">25% mix</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: color-mix(in oklch, var(--primary-color) 50%, #10b981);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">50% mix</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: color-mix(in oklch, var(--primary-color) 75%, #10b981);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">75% mix</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: #10b981;"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Color 2</div>
+      </div>
+    </div>
+  </div>
+</section>
+

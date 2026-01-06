@@ -1,0 +1,30 @@
+/**
+ * --xnor() — Exclusive NOR Operation (NOT XOR)
+ *
+ * Returns 1 if both operands are the same, otherwise returns 0.
+ * The opposite of XOR - checks for equality.
+ *
+ * Truth table:
+ * - 0 XNOR 0 = 1 (both same)
+ * - 0 XNOR 1 = 0 (different)
+ * - 1 XNOR 0 = 0 (different)
+ * - 1 XNOR 1 = 1 (both same)
+ *
+ * @param {number} --a - First switch variable (0 or 1)
+ * @param {number} --b - Second switch variable (0 or 1)
+ * @returns {number} - Result (0 or 1)
+ *
+ * @example
+ * .sync-indicator {
+ *   --local-state: 1;
+ *   --remote-state: 1;
+ *   opacity: --xnor(var(--local-state), var(--remote-state));
+ * }
+ *
+ * @see https://css-tricks.com/logical-operations-with-css-variables/
+ */
+
+@function --xnor(--a <number>, --b <number>) returns <number> {
+  result: calc(1 - (var(--a) - var(--b)) * (var(--a) - var(--b)));
+}
+

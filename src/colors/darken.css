@@ -1,0 +1,20 @@
+/**
+ * --darken() — Color Luminance Decrease
+ *
+ * Adjust a color's lightness downward.
+ * Uses OKLCH lightness channel (0-1 range).
+ *
+ * @param {color} --color - The base color
+ * @param {number} --amount - Amount to darken (0-1, e.g., 0.1 = 10%, 0.2 = 20%), default: 0.1
+ * @returns {color} - Darkened color
+ *
+ * @example
+ * .btn:active {
+ *   background: --darken(var(--btn-bg), 0.1);
+ * }
+ */
+
+@function --darken(--color <color>, --amount <number>: 0.1) returns <color> {
+  result: oklch(from var(--color) calc(l - var(--amount)) c h);
+}
+

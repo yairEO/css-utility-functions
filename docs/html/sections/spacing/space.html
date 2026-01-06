@@ -1,0 +1,40 @@
+<section id="space" class="function-section">
+  <h1><a href="#space">--space()</a></h1>
+  <p class="function-description">
+    Consistent spacing scale based on a multiplier. The base unit can be customized via the --space-base CSS custom property (default: 0.25rem).
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--multiplier</code> <span style="color: var(--required-color);">(required)</span> — Scale multiplier.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--base</code> <span style="color: var(--optional-color);">(optional)</span> — Base spacing unit. Default: <code>var(--space-base, 0.25rem)</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.card {
+  padding: --space(4);        /* 1rem (4 × 0.25rem) */
+  margin-bottom: --space(6);  /* 1.5rem */
+  gap: --space(2);            /* 0.5rem */
+}
+
+.special {
+  padding: --space(4, 0.5rem);  /* Custom base */
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(2);">
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(2); border-radius: 4px;">--space(2)</div>
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(4); border-radius: 4px;">--space(4)</div>
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(6); border-radius: 4px;">--space(6)</div>
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(8); border-radius: 4px;">--space(8)</div>
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,94 @@
+<section id="poly-angle" class="function-section">
+  <h1><a href="#poly-angle">--poly-angle()</a></h1>
+  <p class="function-description">
+    Calculate the angle for a vertex in a regular polygon. Useful for creating polygon shapes with CSS transforms.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--sides</code> <span style="color: var(--required-color);">(required)</span> — Number of sides in polygon.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--index</code> <span style="color: var(--optional-color);">(optional)</span> — Vertex index (0-based). Default: <code>0</code>.
+      </li>
+    </ul>
+  </div>
+  <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(2);">
+    Formula: (360deg / sides × index) - 90deg
+  </p>
+
+  <div class="example-group">
+    <h3>Interactive Demo</h3>
+
+    <div style="padding: --space(4); background: var(--code-bg); border-radius: 8px; margin-top: --space(4);">
+      <div style="display: flex; flex-direction: column; gap: --space(4); margin-bottom: --space(4);">
+        <div style="display: flex; align-items: center; gap: --space(4);">
+          <label for="poly-sides-slider" style="font-weight: 500; min-width: 100px;">Sides = <span id="poly-sides-value">6</span></label>
+          <input type="range" id="poly-sides-slider" min="3" max="12" step="1" value="6" style="flex: 1; height: 8px;">
+        </div>
+        <div style="display: flex; align-items: center; gap: --space(4);">
+          <label for="poly-index-slider" style="font-weight: 500; min-width: 100px;">Index = <span id="poly-index-value">0</span></label>
+          <input type="range" id="poly-index-slider" min="0" max="5" step="1" value="0" style="flex: 1; height: 8px;">
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: --space(4);">
+        <div id="poly-demo" style="--sides: 6; --index: 0; position: relative; width: 200px; height: 200px; margin: 0 auto;">
+          <div style="position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; transform: translate(-50%, -50%); border: 2px solid var(--primary-color); border-radius: 50%;"></div>
+          <div class="vertex" data-i="0" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 0)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="1" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 1)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="2" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 2)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="3" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 3)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="4" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 4)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="5" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 5)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="6" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 6)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="7" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 7)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="8" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 8)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="9" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 9)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="10" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 10)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="11" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 11)); transform-origin: center 80px;"></div>
+        </div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); color: var(--muted-text-color);">
+          <code>transform: rotate(--poly-angle(<span id="code-sides">6</span>, <span id="code-index">0</span>));</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const $ = id => document.getElementById(id);
+      const [sides, index, demo] = ['poly-sides-slider', 'poly-index-slider', 'poly-demo'].map($);
+      const vertices = demo.querySelectorAll('.vertex');
+
+      const update = () => {
+        const s = +sides.value, i = Math.min(+index.value, s - 1);
+
+        // Update displays
+        [['poly-sides-value', s], ['poly-index-value', i],
+         ['code-sides', s], ['code-index', i]].forEach(([id, val]) => $(id).textContent = val);
+
+        index.max = s - 1;
+        index.value = i;
+
+        // Update CSS custom properties
+        demo.style.setProperty('--sides', s);
+        demo.style.setProperty('--index', i);
+
+        // Show/hide and style vertices
+        vertices.forEach(v => {
+          const idx = +v.dataset.i;
+          v.style.display = idx < s ? 'block' : 'none';
+          v.style.width = v.style.height = idx === i ? '12px' : '8px';
+          v.style.background = idx === i ? 'var(--primary-color)' : '#9ca3af';
+        });
+      };
+
+      sides.oninput = index.oninput = update;
+      update();
+    })();
+  </script>
+</section>
+

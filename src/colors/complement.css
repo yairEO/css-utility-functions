@@ -1,0 +1,23 @@
+/**
+ * --complement() — Complementary Color
+ *
+ * Get the complementary color (opposite on color wheel) by rotating hue 180 degrees.
+ * Uses OKLCH color space for accurate hue rotation.
+ * Note: Achromatic colors (grays) have no hue, so their complement is unchanged.
+ *
+ * @param {color} --color - The base color
+ * @returns {color} - Complementary color
+ *
+ * @example
+ * .accent {
+ *   background: --complement(#6366f1);  // Blue's complement (orange)
+ * }
+ * .contrast-border {
+ *   border-color: --complement(var(--primary));
+ * }
+ */
+
+@function --complement(--color <color>) returns <color> {
+    result: oklch(from var(--color) l c calc(h + 180));
+}
+

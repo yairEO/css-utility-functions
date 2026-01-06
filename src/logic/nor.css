@@ -1,0 +1,30 @@
+/**
+ * --nor() — Logical NOR Operation (NOT OR)
+ *
+ * Returns 1 if both operands are 0, otherwise returns 0.
+ * Combination of NOT and OR operations.
+ *
+ * Truth table:
+ * - 0 NOR 0 = 1
+ * - 0 NOR 1 = 0
+ * - 1 NOR 0 = 0
+ * - 1 NOR 1 = 0
+ *
+ * @param {number} --a - First switch variable (0 or 1)
+ * @param {number} --b - Second switch variable (0 or 1)
+ * @returns {number} - Result (0 or 1)
+ *
+ * @example
+ * .show-default-state {
+ *   --has-custom-bg: 0;
+ *   --has-custom-text: 0;
+ *   opacity: --nor(var(--has-custom-bg), var(--has-custom-text));
+ * }
+ *
+ * @see https://css-tricks.com/logical-operations-with-css-variables/
+ */
+
+@function --nor(--a <number>, --b <number>) returns <number> {
+  result: calc((1 - var(--a)) * (1 - var(--b)));
+}
+

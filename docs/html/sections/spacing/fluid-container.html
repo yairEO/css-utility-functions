@@ -1,0 +1,49 @@
+<section id="fluid-container" class="function-section">
+  <h1><a href="#fluid-container">--fluid-container()</a></h1>
+  <p class="function-description">
+    Container-responsive sizing that scales based on container width rather than viewport. Requires the parent element to have <code>container-type: inline-size</code>. Perfect for component-level responsive design.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--min</code> <span style="color: var(--required-color);">(required)</span> — Minimum size value. The size will never go below this value.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--max</code> <span style="color: var(--required-color);">(required)</span> — Maximum size value. The size will never exceed this value.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--min-cqw</code> <span style="color: var(--optional-color);">(optional)</span> — Minimum container width at which <code>--min</code> is applied. Default: <code>20ch</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--max-cqw</code> <span style="color: var(--optional-color);">(optional)</span> — Maximum container width at which <code>--max</code> is applied. Default: <code>65ch</code>.
+      </li>
+    </ul>
+  </div>
+  <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(2);">
+    The function generates a <code>clamp()</code> value that scales smoothly between <code>--min</code> and <code>--max</code> based on the container's width, using container query units (<code>cqw</code>).
+  </p>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.card {
+  container-type: inline-size;
+}
+
+.card h2 {
+  font-size: --fluid-container(1rem, 2rem);
+}
+
+.card p {
+  font-size: --fluid-container(0.875rem, 1.125rem, 30ch, 60ch);
+}</code>
+    </div>
+    <div style="container-type: inline-size; border: 2px solid var(--border-color); border-radius: 8px; padding: --space(4); margin-bottom: --space(4); resize: horizontal; overflow: auto;">
+      <h3 style="font-size: --fluid-container(1.25rem, 2rem); margin-bottom: --space(2);">Container-Responsive Heading</h3>
+      <p style="font-size: --fluid-container(0.875rem, 1.125rem);">Resize this container to see the text scale based on container width, not viewport.</p>
+    </div>
+  </div>
+</section>
+

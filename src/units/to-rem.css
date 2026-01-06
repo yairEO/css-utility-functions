@@ -1,0 +1,28 @@
+/**
+ * --to-rem() — Pixel to REM Conversion
+ *
+ * Convert a pixel value to rem units. Base pixel size defaults to --rem-base (or 16px).
+ *
+ * @param {number} --px - Pixel value (unitless)
+ * @param {number} --base - Base pixel size for conversion, defaults to var(--rem-base, 16)
+ * @returns {length} - REM value
+ *
+ * @example
+ * .legacy-compat {
+ *   font-size: --to-rem(18);
+ *   padding: --to-rem(24);
+ * }
+ *
+ * .custom-base {
+ *   font-size: --to-rem(18, 10);
+ * }
+ *
+ * :root {
+ *   --rem-base: 20;
+ * }
+ */
+
+@function --to-rem(--px <number>, --base <number>: var(--rem-base, 16)) returns <length> {
+  result: calc(var(--px) * 1rem / var(--base));
+}
+

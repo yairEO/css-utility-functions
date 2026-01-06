@@ -1,0 +1,63 @@
+<section id="invert" class="function-section">
+  <h1><a href="#invert">--invert()</a></h1>
+  <p class="function-description">
+    Invert a color by flipping its lightness in OKLCH space. Dark colors become light, light colors become dark.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.inverted {
+  background: --invert(#ffffff);  // White becomes black
+}
+
+.dark-mode-text {
+  color: --invert(var(--light-text));
+}</code>
+    </div>
+    <style>
+      .invert-demo-white { background: #ffffff; }
+      .invert-demo-white-inv { background: --invert(#ffffff); }
+      .invert-demo-black { background: #000000; }
+      .invert-demo-black-inv { background: --invert(#000000); }
+      .invert-demo-blue { background: var(--primary-color); }
+      .invert-demo-blue-inv { background: --invert(var(--primary-color)); }
+    </style>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo invert-demo-white"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">#ffffff</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-white-inv"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--invert(#ffffff)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-black"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">#000000</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-black-inv"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--invert(#000000)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-blue"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">var(--primary-color)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-blue-inv"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--invert(var(--primary-color))</div>
+      </div>
+    </div>
+  </div>
+</section>
+

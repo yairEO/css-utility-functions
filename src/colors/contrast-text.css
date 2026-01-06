@@ -1,0 +1,20 @@
+/**
+ * --contrast-text() — Auto Contrast Text Color
+ *
+ * Returns black or white depending on background luminance for optimal readability.
+ * Uses a mathematical approach with OKLCH lightness.
+ *
+ * @param {color} --bg - Background color
+ * @returns {color} - Black or white based on luminance
+ *
+ * @example
+ * .badge {
+ *   background: var(--badge-color);
+ *   color: --contrast-text(var(--badge-color));
+ * }
+ */
+
+@function --contrast-text(--bg <color>) returns <color> {
+  result: oklch(from var(--bg) calc((0.6 - l) * infinity) 0 0);
+}
+

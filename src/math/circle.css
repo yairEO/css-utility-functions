@@ -1,0 +1,46 @@
+/**
+ * --circle-x() — Circle X Position
+ *
+ * Calculate X coordinate on a circle using radius and angle.
+ * Uses cosine: r * cos(deg)
+ *
+ * @param {length} --radius - Circle radius
+ * @param {angle} --angle - Angle in degrees, default: 0deg
+ * @returns {length} - X coordinate offset from center
+ *
+ * @example
+ * .orbit {
+ *   left: calc(50% + --circle-x(100px, 45deg));  // 45° position
+ * }
+ */
+
+@function --circle-x(
+  --radius <length>,
+  --angle <angle>: 0deg
+) returns <length> {
+  result: calc(var(--radius) * cos(var(--angle)));
+}
+
+/**
+ * --circle-y() — Circle Y Position
+ *
+ * Calculate Y coordinate on a circle using radius and angle.
+ * Uses sine: r * sin(deg)
+ *
+ * @param {length} --radius - Circle radius
+ * @param {angle} --angle - Angle in degrees, default: 0deg
+ * @returns {length} - Y coordinate offset from center
+ *
+ * @example
+ * .orbit {
+ *   top: calc(50% + --circle-y(100px, 45deg));  // 45° position
+ * }
+ */
+
+@function --circle-y(
+  --radius <length>,
+  --angle <angle>: 0deg
+) returns <length> {
+  result: calc(var(--radius) * sin(var(--angle)));
+}
+

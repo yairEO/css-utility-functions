@@ -1,0 +1,29 @@
+/**
+ * --lerp() — Linear Interpolation
+ *
+ * Interpolates between two values using a t parameter (0-1).
+ * When t=0, returns a; when t=1, returns b; when t=0.5, returns midpoint.
+ * Hides the complex calc expression: calc(a + (b - a) * t)
+ *
+ * @param {length-percentage} --a - Start value
+ * @param {length-percentage} --b - End value
+ * @param {number} --t - Interpolation factor (0-1), default: 0.5
+ * @returns {length-percentage} - Interpolated value
+ *
+ * @example
+ * .animated {
+ *   width: --lerp(100px, 500px, 0.3);  // 30% between 100px and 500px
+ * }
+ * .transition {
+ *   width: --lerp(10%, 80%, 0.75);  // 75% between 10% and 80%
+ * }
+ */
+
+@function --lerp(
+  --a <length-percentage>,
+  --b <length-percentage>,
+  --t <number>: 0.5
+) returns <length-percentage> {
+  result: calc(var(--a) * (1 - var(--t)) + var(--b) * var(--t));
+}
+

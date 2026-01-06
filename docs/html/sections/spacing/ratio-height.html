@@ -1,0 +1,51 @@
+<section id="ratio-height" class="function-section">
+  <h1><a href="#ratio-height">--ratio-height()</a></h1>
+  <p class="function-description">
+    Calculate height from width and aspect ratio. Useful for maintaining aspect ratios in images, videos, or containers.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--width</code> <span style="color: var(--required-color);">(required)</span> — Element width.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--ratio-w</code> <span style="color: var(--optional-color);">(optional)</span> — Ratio width part. Default: <code>16</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--ratio-h</code> <span style="color: var(--optional-color);">(optional)</span> — Ratio height part. Default: <code>9</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.video-thumb {
+  width: 320px;
+  height: --ratio-height(320px, 16, 9);  /* 180px */
+}
+
+.square-avatar {
+  width: 48px;
+  height: --ratio-height(48px, 1, 1);  /* 48px */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item" style="padding: 0;">
+        <div style="width: 100%; height: calc(100% * 9 / 16); background: --alpha(var(--primary-color), 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.875rem;">16:9</div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">16:9 Ratio</div>
+      </div>
+      <div class="demo-item" style="padding: 0;">
+        <div style="width: 100%; height: calc(100% * 1 / 1); background: --alpha(var(--primary-color), 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.875rem;">1:1</div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Square (1:1)</div>
+      </div>
+      <div class="demo-item" style="padding: 0;">
+        <div style="width: 100%; height: calc(100% * 4 / 3); background: --alpha(var(--primary-color), 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.875rem;">4:3</div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">4:3 Ratio</div>
+      </div>
+    </div>
+  </div>
+</section>
+

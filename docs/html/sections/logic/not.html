@@ -1,0 +1,41 @@
+<section id="not" class="function-section">
+  <h1><a href="#not">--not()</a></h1>
+  <p class="function-description">
+    Boolean negation. Returns 0 if input is 1, and 1 if input is 0. Useful for toggling CSS properties based on state variables.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--value</code> <span style="color: var(--required-color);">(required)</span> — Switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.toggle {
+  --is-hidden: 0;
+  opacity: --not(var(--is-hidden));  /* 1 = visible */
+}
+
+.toggle.hidden {
+  --is-hidden: 1;
+  /* opacity becomes 0 = invisible */
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px;">
+        <div style="font-weight: 600;">Input: 1</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(1);">Output: 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px;">
+        <div style="font-weight: 600;">Input: 0</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(1);">Output: 1</div>
+      </div>
+    </div>
+  </div>
+</section>
+

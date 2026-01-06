@@ -1,0 +1,22 @@
+/**
+ * --desaturate() — Color Saturation Decrease
+ *
+ * Adjust a color's chroma (saturation) intensity downward.
+ *
+ * @param {color} --color - The base color
+ * @param {number} --amount - Percentage as decimal (e.g., 0.5 = 50%), default: 0.2
+ * @returns {color} - Less saturated (more muted) color
+ *
+ * @example
+ * .muted {
+ *   color: --desaturate(var(--text), 0.5);
+ * }
+ */
+
+@function --desaturate(
+  --color <color>,
+  --amount <number>: 0.2
+) returns <color> {
+  result: oklch(from var(--color) l calc(c - c * var(--amount)) h);
+}
+

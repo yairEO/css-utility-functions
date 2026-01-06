@@ -1,0 +1,22 @@
+/**
+ * --grayscale() — Grayscale Conversion
+ *
+ * Convert any color to grayscale by removing chroma (saturation).
+ * Uses OKLCH color space, setting chroma to 0 while preserving lightness.
+ *
+ * @param {color} --color - The base color
+ * @returns {color} - Grayscale version of the color
+ *
+ * @example
+ * .monochrome {
+ *   background: --grayscale(#6366f1);  // Blue becomes gray
+ * }
+ * .desaturated-image {
+ *   filter: --grayscale(var(--image-color));
+ * }
+ */
+
+@function --grayscale(--color <color>) returns <color> {
+  result: oklch(from var(--color) l 0 h);
+}
+

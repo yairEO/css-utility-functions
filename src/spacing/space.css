@@ -1,0 +1,30 @@
+/**
+ * --space() — Spacing Scale
+ *
+ * Returns spacing based on a consistent multiplier scale.
+ * The base unit can be customized via the --space-base CSS custom property.
+ *
+ * @param {number} --multiplier - Scale multiplier
+ * @param {length} --base - Base spacing unit, default: var(--space-base, 0.25rem)
+ * @returns {length} - Calculated spacing
+ *
+ * @example
+ * :root {
+ *   --space-base: 0.25rem;
+ * }
+ *
+ * .card {
+ *   padding: --space(4);
+ *   margin-bottom: --space(6);
+ *   gap: --space(2);
+ * }
+ *
+ * .special {
+ *   padding: --space(4, 0.5rem);
+ * }
+ */
+
+@function --space(--multiplier <number>, --base <length>: var(--space-base, 0.25rem)) returns <length> {
+  result: calc(var(--base) * var(--multiplier));
+}
+

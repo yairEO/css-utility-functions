@@ -1,0 +1,27 @@
+/**
+ * --mix() — Color Mixing
+ *
+ * Blend two colors by a given percentage.
+ *
+ * @param {color} --color1 - First color
+ * @param {color} --color2 - Second color
+ * @param {percentage} --weight - Weight of first color, default: 50%
+ * @returns {color} - Mixed color
+ *
+ * @example
+ * .gradient-mid {
+ *   background: --mix(var(--start), var(--end), 50%);
+ * }
+ * .tinted {
+ *   background: --mix(white, var(--brand), 90%);
+ * }
+ */
+
+@function --mix(
+  --color1 <color>,
+  --color2 <color>,
+  --weight <percentage>: 50%
+) returns <color> {
+  result: color-mix(in oklch, var(--color1) var(--weight), var(--color2));
+}
+

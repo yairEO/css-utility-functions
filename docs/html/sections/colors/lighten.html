@@ -1,0 +1,50 @@
+<section id="lighten" class="function-section">
+  <h1><a href="#lighten">--lighten()</a></h1>
+  <p class="function-description">
+    Adjust a color's lightness. Use decimal values (0.1 = 10%, 0.2 = 20%). Increases the lightness component of the color.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--amount</code> <span style="color: var(--optional-color);">(optional)</span> — Amount to lighten (0-1, e.g., 0.1 = 10%, 0.2 = 20%). Default: <code>0.1</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.btn:hover {
+  background: --lighten(var(--btn-bg), 0.15);  /* 15% lighter */
+}
+
+.card {
+  border-color: --lighten(var(--primary-color), 0.2);  /* 20% lighter */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: var(--primary-color);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Original</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) calc(l + 0.1) c h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+10% lightness</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) calc(l + 0.2) c h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+20% lightness</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) calc(l + 0.3) c h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+30% lightness</div>
+      </div>
+    </div>
+  </div>
+</section>
+

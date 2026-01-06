@@ -1,0 +1,24 @@
+/**
+ * --z() — Z-Index Scale
+ *
+ * Named z-index layers to avoid magic numbers and conflicts.
+ *
+ * Layer reference:
+ * 1: dropdown, 2: sticky, 3: fixed,
+ * 4: drawer, 5: modal, 6: popover,
+ * 7: tooltip, 8: toast, 9: max
+ *
+ * @param {number} --layer - Layer number (1-9)
+ * @returns {integer} - Z-index value (layer × 100)
+ *
+ * @example
+ * .dropdown { z-index: --z(1); }
+ * .header { z-index: --z(3); }
+ * .modal { z-index: --z(5); }
+ * .tooltip { z-index: --z(7); }
+ */
+
+@function --z(--layer <number>) returns <integer> {
+  result: calc(var(--layer) * 100);
+}
+
