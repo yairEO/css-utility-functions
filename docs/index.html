@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Utility Functions Demo</title>
+<link rel="stylesheet" href="../dist/index.css">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --sidebar-width: 280px;
+    --header-height: 50px;
+    --primary-color: #6366f1;
+    --bg-color: #ffffff;
+    --text-color: #1f2937;
+    --border-color: #e5e7eb;
+    --code-bg: #f9fafb;
+    --sidebar-bg: #fafafa;
+    --hover-bg: #f3f4f6;
+    --required-color: #ef4444;
+    --optional-color: #10b981;
+    --muted-text-color: #6b7280;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: var(--text-color);
+    background: var(--bg-color);
+    line-height: 1.6;
+  }
+
+  /* Header */
+  .header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: --alpha(var(--bg-color), 0.6);
+    backdrop-filter: blur(5px) saturate(0.5);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 --space(6);
+    z-index: --z(4);
+    box-shadow: --shadow(1);
+  }
+
+  .header-left {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    gap: --space(3);
+  }
+
+  .header-title {
+    font-size: --fluid(1rem, 1.125rem);
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .github-link {
+    display: flex;
+    align-items: center;
+    gap: --space(2);
+    color: var(--text-color);
+    text-decoration: none;
+    padding: --space(2) --space(3);
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+    font-weight: 500;
+    font-size: 0.875rem;
+
+    &:hover {
+      background: var(--hover-bg);
+      color: var(--primary-color);
+    }
+
+    & svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+  }
+
+  .container {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: var(--header-height);
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--header-height));
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    padding: --space(4);
+    z-index: --z(3);
+
+    & h2 {
+      font-size: --fluid(1rem, 1.25rem);
+      margin-bottom: --space(4);
+      color: var(--primary-color);
+    }
+
+    & nav {
+      & ul {
+        list-style: none;
+      }
+
+      & li {
+        margin-bottom: --space(1);
+
+        animation: animate-in linear forwards;
+        animation-timeline: view();
+        animation-range: entry exit;
+
+      }
+
+      & a {
+        display: block;
+        padding: --space(1) --space(3);
+        color: var(--text-color);
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background: var(--hover-bg);
+        }
+
+        &.active {
+          background: --alpha(var(--primary-color), 0.1);
+          color: var(--primary-color);
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .category-header {
+    margin-top: --space(4);
+    margin-bottom: --space(2);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-color);
+    opacity: 0.6;
+    padding: 0 --space(3);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  /* Main Content */
+  .main-content {
+    margin-left: var(--sidebar-width);
+    padding: --space(6);
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .function-section {
+    margin-bottom: --space(20);
+    padding-bottom: --space(12);
+    border-bottom: 2px solid var(--border-color);
+    scroll-margin-top: calc(var(--header-height) + --space(4));
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    & h1 {
+      font-size: --fluid(1.75rem, 2.5rem);
+      margin-bottom: --space(2);
+      color: var(--primary-color);
+
+      & a {
+        color: inherit;
+        text-decoration: none;
+        position: relative;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.7;
+
+          &::before {
+            opacity: 0.5;
+          }
+        }
+
+        &::before {
+          content: '#';
+          position: absolute;
+          left: --neg(--space(6));
+          opacity: 0;
+          color: var(--primary-color);
+          transition: opacity 0.2s;
+        }
+      }
+    }
+  }
+
+  .function-description {
+    font-size: --fluid(1rem, 1.125rem);
+    margin-bottom: --space(6);
+    color: #4b5563;
+    line-height: 1.7;
+  }
+
+  .example-group {
+    margin-bottom: --space(8);
+
+    & h3 {
+      font-size: --fluid(1.125rem, 1.25rem);
+      margin-bottom: --space(3);
+      color: var(--text-color);
+      font-weight: 600;
+    }
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: --space(4);
+    margin-bottom: --space(4);
+    overflow-x: auto;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+
+    & code {
+      color: #1f2937;
+      white-space: pre;
+    }
+  }
+
+  .demo-box {
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: --space(6);
+    margin-bottom: --space(4);
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: --space(3);
+    margin-bottom: --space(4);
+  }
+
+  .demo-item {
+    padding: --space(4);
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .color-demo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: --space(2);
+    border: 1px solid var(--border-color);
+  }
+
+  .interactive-controls {
+    display: flex;
+    gap: --space(4);
+    flex-wrap: wrap;
+    margin-bottom: --space(4);
+    align-items: center;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: --space(1);
+
+    & label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #6b7280;
+    }
+
+    & input[type="range"] {
+      width: 200px;
+    }
+
+    & input[type="color"] {
+      width: 60px;
+      height: 40px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+
+  .intro {
+    margin-bottom: --space(16);
+    padding-bottom: --space(12);
+    border-bottom: 2px solid var(--border-color);
+
+    & h1 {
+      font-size: --fluid(2rem, 3rem);
+      margin-bottom: --space(4);
+      color: var(--primary-color);
+    }
+
+    & p {
+      font-size: --fluid(1rem, 1.125rem);
+      color: #4b5563;
+      line-height: 1.7;
+      margin-bottom: --space(4);
+    }
+  }
+
+  .warning-box {
+    background: --alpha(#fbbf24, 0.1);
+    border-left: 4px solid #fbbf24;
+    padding: --space(4);
+    border-radius: 4px;
+    margin-bottom: --space(6);
+
+    & strong {
+      color: #92400e;
+    }
+  }
+
+  @keyframes animate-in {
+    entry 80% {
+        opacity: 0;
+        transform: translateX(-40%);
+    }
+    entry 120% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    exit -80% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    exit 120% {
+        opacity: 0;
+        transform: translateX(-40%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+
+    .main-content {
+      margin-left: 0;
+      padding: --space(4);
+    }
+
+    .header {
+      padding: 0 --space(4);
+    }
+  }
+</style>
+
+</head>
+<body>
+  <header class="header">
+  <div class="header-left">
+    <span class="header-title">CSS Utility Functions</span>
+  </div>
+  <a href="https://github.com/yairEO/css-utility-functions" target="_blank" rel="noopener noreferrer" class="github-link">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+    </svg>
+    <span>View on GitHub</span>
+  </a>
+</header>
+
+  <div class="container">
+    <aside class="sidebar" id="sidebar">
+  <nav>
+    <ul>
+      <li class="category-header">Color Utilities</li>
+      <li><a href="#alpha" data-function="alpha">--alpha()</a></li>
+      <li><a href="#lighten" data-function="lighten">--lighten()</a></li>
+      <li><a href="#darken" data-function="darken">--darken()</a></li>
+      <li><a href="#saturate" data-function="saturate">--saturate()</a></li>
+      <li><a href="#desaturate" data-function="desaturate">--desaturate()</a></li>
+      <li><a href="#mix" data-function="mix">--mix()</a></li>
+      <li><a href="#contrast-text" data-function="contrast-text">--contrast-text()</a></li>
+      <li><a href="#grayscale" data-function="grayscale">--grayscale()</a></li>
+      <li><a href="#invert" data-function="invert">--invert()</a></li>
+      <li><a href="#complement" data-function="complement">--complement()</a></li>
+
+      <li class="category-header">Spacing & Sizing</li>
+      <li><a href="#space" data-function="space">--space()</a></li>
+      <li><a href="#fluid" data-function="fluid">--fluid()</a></li>
+      <li><a href="#fluid-container" data-function="fluid-container">--fluid-container()</a></li>
+      <li><a href="#ratio-height" data-function="ratio-height">--ratio-height()</a></li>
+
+      <li class="category-header">Visual Effects</li>
+      <li><a href="#shadow" data-function="shadow">--shadow()</a></li>
+      <li><a href="#diagonal-lines" data-function="diagonal-lines">--diagonal-lines()</a></li>
+
+      <li class="category-header">Layout Utilities</li>
+      <li><a href="#z-index" data-function="z-index">--z()</a></li>
+      <li><a href="#neg" data-function="neg">--neg()</a></li>
+
+      <li class="category-header">Math Utilities</li>
+      <li><a href="#lerp" data-function="lerp">--lerp()</a></li>
+      <li><a href="#circle" data-function="circle">--circle-x() / --circle-y()</a></li>
+      <li><a href="#modular" data-function="modular">--modular()</a></li>
+      <li><a href="#poly-angle" data-function="poly-angle">--poly-angle()</a></li>
+
+      <li class="category-header">Unit Conversion</li>
+      <li><a href="#to-rem" data-function="to-rem">--to-rem()</a></li>
+      <li><a href="#to-px" data-function="to-px">--to-px()</a></li>
+
+      <li class="category-header">Logic Operations</li>
+      <li><a href="#not" data-function="not">--not()</a></li>
+      <li><a href="#and" data-function="and">--and()</a></li>
+      <li><a href="#or" data-function="or">--or()</a></li>
+      <li><a href="#xor" data-function="xor">--xor()</a></li>
+      <li><a href="#nand" data-function="nand">--nand()</a></li>
+      <li><a href="#nor" data-function="nor">--nor()</a></li>
+      <li><a href="#xnor" data-function="xnor">--xnor()</a></li>
+    </ul>
+  </nav>
+</aside>
+
+    <main class="main-content">
+      <section class="intro">
+  <h1>CSS Utility Functions</h1>
+  <p>A collection of reusable CSS custom native functions using the new <code>@function</code> syntax.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ Experimental Feature:</strong> CSS <code>@function</code> is currently experimental. Check <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@function#browser_compatibility" target="_blank">browser compatibility</a> before using in production.
+  </div>
+
+  <p>These utility functions provide powerful, reusable CSS capabilities that work seamlessly with CSS custom properties. Each function is designed to solve common styling challenges while maintaining type safety and performance.</p>
+
+  <h3 style="margin-top: --space(6); margin-bottom: --space(3); font-size: --fluid(1.25rem, 1.5rem);">Features</h3>
+  <ul style="list-style: none; padding-left: 0;">
+    <li style="padding: --space(2) 0; border-bottom: 1px solid var(--border-color);">✨ <strong>Type-safe:</strong> Functions use CSS type system for validation</li>
+    <li style="padding: --space(2) 0; border-bottom: 1px solid var(--border-color);">🚀 <strong>Performant:</strong> Compiled at build time, zero runtime overhead</li>
+    <li style="padding: --space(2) 0; border-bottom: 1px solid var(--border-color);">🎨 <strong>Modern:</strong> Built with OKLCH color space for better color manipulation</li>
+    <li style="padding: --space(2) 0; border-bottom: 1px solid var(--border-color);">📦 <strong>Modular:</strong> Import only what you need</li>
+    <li style="padding: --space(2) 0;">🔧 <strong>Customizable:</strong> Works with CSS custom properties</li>
+  </ul>
+</section>
+
+
+      <section id="alpha" class="function-section">
+  <h1><a href="#alpha">--alpha()</a></h1>
+  <p class="function-description">
+    Creates a semi-transparent version of any color. Works exactly like CSS opacity property:
+    0 = fully transparent (invisible), 1 = fully opaque (solid), 0.5 = 50% opaque.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--opacity</code> <span style="color: var(--optional-color);">(optional)</span> — Opacity level (0-1). Higher values = more opaque, lower values = more transparent. Default: <code>0.5</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.overlay {
+  background: --alpha(var(--primary-color), 0.2);  /* 20% opaque */
+}
+
+.backdrop {
+  background: --alpha(var(--brand), 0.85);  /* 85% opaque */
+}</code>
+    </div>
+    <div class="demo-box" data-demo="alpha">
+      <div class="interactive-controls">
+        <div class="control-group">
+          <label>Color</label>
+          <input type="color" value="var(--primary-color)">
+        </div>
+        <div class="control-group">
+          <label>Opacity</label>
+          <input type="range" min="0" max="1" step="0.01" value="0.5">
+        </div>
+        <div class="value-display" style="align-self: center; font-weight: 600;">Opacity: 0.5</div>
+      </div>
+      <div class="color-demo" style="width: 100%; height: 100px; border-radius: 6px; background: oklch(from var(--primary-color) l c h / 0.5);"></div>
+    </div>
+  </div>
+
+  <div class="example-group">
+    <h3>Examples</h3>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l c h / 0.1);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">10% opacity</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l c h / 0.3);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">30% opacity</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l c h / 0.5);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">50% opacity</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l c h / 0.8);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">80% opacity</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="lighten" class="function-section">
+  <h1><a href="#lighten">--lighten()</a></h1>
+  <p class="function-description">
+    Adjust a color's lightness. Use decimal values (0.1 = 10%, 0.2 = 20%). Increases the lightness component of the color.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--amount</code> <span style="color: var(--optional-color);">(optional)</span> — Amount to lighten (0-1, e.g., 0.1 = 10%, 0.2 = 20%). Default: <code>0.1</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.btn:hover {
+  background: --lighten(var(--btn-bg), 0.15);  /* 15% lighter */
+}
+
+.card {
+  border-color: --lighten(var(--primary-color), 0.2);  /* 20% lighter */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: var(--primary-color);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Original</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) calc(l + 0.1) c h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+10% lightness</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) calc(l + 0.2) c h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+20% lightness</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) calc(l + 0.3) c h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+30% lightness</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="darken" class="function-section">
+  <h1><a href="#darken">--darken()</a></h1>
+  <p class="function-description">
+    Adjust a color's lightness downward. Use decimal values (0.1 = 10%, 0.2 = 20%). Decreases the lightness component of the color.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--amount</code> <span style="color: var(--optional-color);">(optional)</span> — Amount to darken (0-1, e.g., 0.1 = 10%, 0.2 = 20%). Default: <code>0.1</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.btn:active {
+  background: --darken(var(--btn-bg), 0.1);  /* 10% darker */
+}
+
+.shadow {
+  color: --darken(var(--primary-color), 0.3);  /* 30% darker */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: var(--primary-color);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Original</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) calc(l - 0.1) c h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">-10% lightness</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) calc(l - 0.2) c h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">-20% lightness</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) calc(l - 0.3) c h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">-30% lightness</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="saturate" class="function-section">
+  <h1><a href="#saturate">--saturate()</a></h1>
+  <p class="function-description">
+    Boost a color's saturation/chroma. Use decimal values (0.4 = 40%, 1.0 = 100%). Increases the chroma component of the color.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--amount</code> <span style="color: var(--optional-color);">(optional)</span> — Percentage as decimal (e.g., 0.4 = 40%). Default: <code>0.2</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.vibrant {
+  background: --saturate(var(--primary), 0.4);  /* 40% more saturated */
+}
+
+.accent {
+  color: --saturate(var(--primary-color), 0.5);  /* 50% more saturated */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: var(--primary-color);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Original</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l calc(c + 0.1) h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+0.1 saturation</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l calc(c + 0.2) h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+0.2 saturation</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l calc(c + 0.3) h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+0.3 saturation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="desaturate" class="function-section">
+  <h1><a href="#desaturate">--desaturate()</a></h1>
+  <p class="function-description">
+    Reduce a color's saturation/chroma. Use decimal values (0.3 = 30%, 0.5 = 50%). Decreases the chroma component of the color, making it more gray.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--amount</code> <span style="color: var(--optional-color);">(optional)</span> — Percentage as decimal (e.g., 0.5 = 50%). Default: <code>0.2</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.muted {
+  background: --desaturate(var(--primary), 0.3);  /* 30% less saturated */
+}
+
+.disabled {
+  color: --desaturate(var(--primary-color), 0.5);  /* 50% less saturated */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: var(--primary-color);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Original</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l calc(c - 0.1) h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">-0.1 saturation</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l calc(c - 0.2) h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">-0.2 saturation</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l calc(c - 0.3) h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">-0.3 saturation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="mix" class="function-section">
+  <h1><a href="#mix">--mix()</a></h1>
+  <p class="function-description">
+    Blend two colors by a given percentage. The weight parameter determines how much of the first color to use (50% = equal mix).
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color1</code> <span style="color: var(--required-color);">(required)</span> — First color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color2</code> <span style="color: var(--required-color);">(required)</span> — Second color.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--weight</code> <span style="color: var(--optional-color);">(optional)</span> — Weight of first color. Default: <code>50%</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.gradient-mid {
+  background: --mix(var(--start), var(--end), 50%);
+}
+
+.tinted {
+  background: --mix(white, var(--brand), 90%);  /* 90% white, 10% brand */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: var(--primary-color);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Color 1</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: color-mix(in oklch, var(--primary-color) 25%, #10b981);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">25% mix</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: color-mix(in oklch, var(--primary-color) 50%, #10b981);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">50% mix</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: color-mix(in oklch, var(--primary-color) 75%, #10b981);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">75% mix</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: #10b981;"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Color 2</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="contrast-text" class="function-section">
+  <h1><a href="#contrast-text">--contrast-text()</a></h1>
+  <p class="function-description">
+    Auto-select black or white text depending on background luminance for optimal readability. Uses OKLCH lightness to determine the best contrast.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--bg</code> <span style="color: var(--required-color);">(required)</span> — Background color.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.badge {
+  background: var(--badge-color);
+  color: --contrast-text(var(--badge-color));  /* Auto black or white */
+}
+
+.card {
+  background: --alpha(var(--primary), 0.1);
+  color: --contrast-text(--alpha(var(--primary), 0.1));
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item" style="background: var(--primary-color); color: oklch(from var(--primary-color) calc((0.6 - l) * infinity) 0 0); padding: --space(4); border-radius: 6px;">
+        <div style="font-weight: 600;">Dark Background</div>
+        <div style="font-size: 0.875rem; margin-top: --space(1);">White text</div>
+      </div>
+      <div class="demo-item" style="background: #f3f4f6; color: oklch(from #f3f4f6 calc((0.6 - l) * infinity) 0 0); padding: --space(4); border-radius: 6px;">
+        <div style="font-weight: 600;">Light Background</div>
+        <div style="font-size: 0.875rem; margin-top: --space(1);">Black text</div>
+      </div>
+      <div class="demo-item" style="background: #10b981; color: oklch(from #10b981 calc((0.6 - l) * infinity) 0 0); padding: --space(4); border-radius: 6px;">
+        <div style="font-weight: 600;">Medium Background</div>
+        <div style="font-size: 0.875rem; margin-top: --space(1);">Auto contrast</div>
+      </div>
+      <div class="demo-item" style="background: #ef4444; color: oklch(from #ef4444 calc((0.6 - l) * infinity) 0 0); padding: --space(4); border-radius: 6px;">
+        <div style="font-weight: 600;">Red Background</div>
+        <div style="font-size: 0.875rem; margin-top: --space(1);">Auto contrast</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="grayscale" class="function-section">
+  <h1><a href="#grayscale">--grayscale()</a></h1>
+  <p class="function-description">
+    Convert any color to grayscale by removing chroma (saturation). Uses OKLCH color space, setting chroma to 0 while preserving lightness.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.monochrome {
+  background: --grayscale(var(--primary-color));  // Blue becomes gray
+}
+
+.desaturated-image {
+  filter: --grayscale(var(--image-color));
+}</code>
+    </div>
+    <style>
+      .grayscale-demo { background: var(--primary-color); }
+      .grayscale-demo-gray { background: --grayscale(var(--primary-color)); }
+    </style>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo grayscale-demo"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">var(--primary-color)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo grayscale-demo-gray"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--grayscale(var(--primary-color))</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="invert" class="function-section">
+  <h1><a href="#invert">--invert()</a></h1>
+  <p class="function-description">
+    Invert a color by flipping its lightness in OKLCH space. Dark colors become light, light colors become dark.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.inverted {
+  background: --invert(#ffffff);  // White becomes black
+}
+
+.dark-mode-text {
+  color: --invert(var(--light-text));
+}</code>
+    </div>
+    <style>
+      .invert-demo-white { background: #ffffff; }
+      .invert-demo-white-inv { background: --invert(#ffffff); }
+      .invert-demo-black { background: #000000; }
+      .invert-demo-black-inv { background: --invert(#000000); }
+      .invert-demo-blue { background: var(--primary-color); }
+      .invert-demo-blue-inv { background: --invert(var(--primary-color)); }
+    </style>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo invert-demo-white"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">#ffffff</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-white-inv"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--invert(#ffffff)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-black"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">#000000</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-black-inv"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--invert(#000000)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-blue"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">var(--primary-color)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo invert-demo-blue-inv"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--invert(var(--primary-color))</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="complement" class="function-section">
+  <h1><a href="#complement">--complement()</a></h1>
+  <p class="function-description">
+    Get the complementary color (opposite on color wheel) by rotating hue 180 degrees. Uses OKLCH color space for accurate hue rotation.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--required-color);">(required)</span> — The base color.
+      </li>
+    </ul>
+  </div>
+  <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(2);">
+    Note: Achromatic colors (grays) have no hue, so their complement is unchanged.
+  </p>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.accent {
+  background: --complement(var(--primary-color));  // Blue's complement (orange)
+}
+
+.contrast-border {
+  border-color: --complement(var(--primary));
+}</code>
+    </div>
+    <style>
+      .complement-demo-blue { background: var(--primary-color); }
+      .complement-demo-blue-comp { background: --complement(var(--primary-color)); }
+      .complement-demo-green { background: #10b981; }
+      .complement-demo-green-comp { background: --complement(#10b981); }
+      .complement-demo-orange { background: #f59e0b; }
+      .complement-demo-orange-comp { background: --complement(#f59e0b); }
+    </style>
+    <div class="demo-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="demo-item">
+        <div class="color-demo complement-demo-blue"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">var(--primary-color)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-blue-comp"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--complement(var(--primary-color))</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-green"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">#10b981</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-green-comp"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--complement(#10b981)</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-orange"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">#f59e0b</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo complement-demo-orange-comp"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); font-family: monospace;">--complement(#f59e0b)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+      <section id="space" class="function-section">
+  <h1><a href="#space">--space()</a></h1>
+  <p class="function-description">
+    Consistent spacing scale based on a multiplier. The base unit can be customized via the --space-base CSS custom property (default: 0.25rem).
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--multiplier</code> <span style="color: var(--required-color);">(required)</span> — Scale multiplier.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--base</code> <span style="color: var(--optional-color);">(optional)</span> — Base spacing unit. Default: <code>var(--space-base, 0.25rem)</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.card {
+  padding: --space(4);        /* 1rem (4 × 0.25rem) */
+  margin-bottom: --space(6);  /* 1.5rem */
+  gap: --space(2);            /* 0.5rem */
+}
+
+.special {
+  padding: --space(4, 0.5rem);  /* Custom base */
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(2);">
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(2); border-radius: 4px;">--space(2)</div>
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(4); border-radius: 4px;">--space(4)</div>
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(6); border-radius: 4px;">--space(6)</div>
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(8); border-radius: 4px;">--space(8)</div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="fluid" class="function-section">
+  <h1><a href="#fluid">--fluid()</a></h1>
+  <p class="function-description">
+    Responsive sizing that scales smoothly between viewport widths. Generates a clamp() value that scales between min and max sizes based on viewport width (default: 375px to 1440px).
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--min</code> <span style="color: var(--required-color);">(required)</span> — Minimum size.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--max</code> <span style="color: var(--required-color);">(required)</span> — Maximum size.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--min-vw</code> <span style="color: var(--optional-color);">(optional)</span> — Minimum viewport width. Default: <code>375px</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--max-vw</code> <span style="color: var(--optional-color);">(optional)</span> — Maximum viewport width. Default: <code>1440px</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>h1 {
+  font-size: --fluid(1.5rem, 4rem);
+}
+
+.container {
+  padding: --fluid(1rem, 3rem, 320px, 1200px);
+}</code>
+    </div>
+    <div class="demo-box" style="text-align: center;">
+      <h2 style="font-size: --fluid(1.5rem, 3rem); margin: 0;">Resize your browser to see fluid sizing</h2>
+      <p style="font-size: --fluid(0.875rem, 1.125rem); margin-top: --space(4); color: var(--muted-text-color);">This text scales smoothly between viewport sizes</p>
+    </div>
+  </div>
+</section>
+
+
+      <section id="fluid-container" class="function-section">
+  <h1><a href="#fluid-container">--fluid-container()</a></h1>
+  <p class="function-description">
+    Container-responsive sizing that scales based on container width rather than viewport. Requires the parent element to have <code>container-type: inline-size</code>. Perfect for component-level responsive design.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--min</code> <span style="color: var(--required-color);">(required)</span> — Minimum size value. The size will never go below this value.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--max</code> <span style="color: var(--required-color);">(required)</span> — Maximum size value. The size will never exceed this value.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--min-cqw</code> <span style="color: var(--optional-color);">(optional)</span> — Minimum container width at which <code>--min</code> is applied. Default: <code>20ch</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--max-cqw</code> <span style="color: var(--optional-color);">(optional)</span> — Maximum container width at which <code>--max</code> is applied. Default: <code>65ch</code>.
+      </li>
+    </ul>
+  </div>
+  <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(2);">
+    The function generates a <code>clamp()</code> value that scales smoothly between <code>--min</code> and <code>--max</code> based on the container's width, using container query units (<code>cqw</code>).
+  </p>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.card {
+  container-type: inline-size;
+}
+
+.card h2 {
+  font-size: --fluid-container(1rem, 2rem);
+}
+
+.card p {
+  font-size: --fluid-container(0.875rem, 1.125rem, 30ch, 60ch);
+}</code>
+    </div>
+    <div style="container-type: inline-size; border: 2px solid var(--border-color); border-radius: 8px; padding: --space(4); margin-bottom: --space(4); resize: horizontal; overflow: auto;">
+      <h3 style="font-size: --fluid-container(1.25rem, 2rem); margin-bottom: --space(2);">Container-Responsive Heading</h3>
+      <p style="font-size: --fluid-container(0.875rem, 1.125rem);">Resize this container to see the text scale based on container width, not viewport.</p>
+    </div>
+  </div>
+</section>
+
+
+      <section id="ratio-height" class="function-section">
+  <h1><a href="#ratio-height">--ratio-height()</a></h1>
+  <p class="function-description">
+    Calculate height from width and aspect ratio. Useful for maintaining aspect ratios in images, videos, or containers.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--width</code> <span style="color: var(--required-color);">(required)</span> — Element width.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--ratio-w</code> <span style="color: var(--optional-color);">(optional)</span> — Ratio width part. Default: <code>16</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--ratio-h</code> <span style="color: var(--optional-color);">(optional)</span> — Ratio height part. Default: <code>9</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.video-thumb {
+  width: 320px;
+  height: --ratio-height(320px, 16, 9);  /* 180px */
+}
+
+.square-avatar {
+  width: 48px;
+  height: --ratio-height(48px, 1, 1);  /* 48px */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item" style="padding: 0;">
+        <div style="width: 100%; height: calc(100% * 9 / 16); background: --alpha(var(--primary-color), 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.875rem;">16:9</div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">16:9 Ratio</div>
+      </div>
+      <div class="demo-item" style="padding: 0;">
+        <div style="width: 100%; height: calc(100% * 1 / 1); background: --alpha(var(--primary-color), 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.875rem;">1:1</div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Square (1:1)</div>
+      </div>
+      <div class="demo-item" style="padding: 0;">
+        <div style="width: 100%; height: calc(100% * 4 / 3); background: --alpha(var(--primary-color), 0.2); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.875rem;">4:3</div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">4:3 Ratio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+      <section id="shadow" class="function-section">
+  <h1><a href="#shadow">--shadow()</a></h1>
+  <p class="function-description">
+    Elevation shadows based on level (1-5). Generates layered box-shadows for depth and elevation. Higher levels create more pronounced shadows.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--level</code> <span style="color: var(--required-color);">(required)</span> — Elevation level (1-5).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--optional-color);">(optional)</span> — Shadow color. Default: <code>oklch(0% 0 0 / 0.1)</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.card {
+  box-shadow: --shadow(2);
+}
+
+.modal {
+  box-shadow: --shadow(5, oklch(0% 0 0 / 0.25));
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item" style="box-shadow: --shadow(1);">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 1</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Subtle shadow</div>
+      </div>
+      <div class="demo-item" style="box-shadow: --shadow(2);">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 2</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Card shadow</div>
+      </div>
+      <div class="demo-item" style="box-shadow: --shadow(3);">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 3</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Elevated</div>
+      </div>
+      <div class="demo-item" style="box-shadow: --shadow(4);">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 4</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">High elevation</div>
+      </div>
+      <div class="demo-item" style="box-shadow: --shadow(5);">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 5</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Maximum elevation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="diagonal-lines" class="function-section">
+  <h1><a href="#diagonal-lines">--diagonal-lines()</a></h1>
+  <p class="function-description">
+    Generate a repeating diagonal line pattern with configurable angle, colors, and spacing. Returns a complete repeating-linear-gradient that can be used directly as a background value.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--angle</code> <span style="color: var(--optional-color);">(optional)</span> — Angle of the lines. Default: <code>-45deg</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--line-color</code> <span style="color: var(--optional-color);">(optional)</span> — Color of the lines. Default: <code>currentColor</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--line-width</code> <span style="color: var(--optional-color);">(optional)</span> — Width of each line. Default: <code>1px</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--gap-width</code> <span style="color: var(--optional-color);">(optional)</span> — Width of the gap between lines. Default: <code>4px</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--gap-color</code> <span style="color: var(--optional-color);">(optional)</span> — Color of the gap (background). Default: <code>transparent</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Interactive Demo</h3>
+    <div class="code-block">
+      <code>.bg-diagonal {
+  background: --diagonal-lines(
+    --angle: <span id="angle-val">-45</span>deg,
+    --line-color: <span id="line-color-val">#3b82f6</span>,
+    --line-width: <span id="line-width-val">1</span>px,
+    --gap-width: <span id="gap-width-val">4</span>px,
+    --gap-color: <span id="gap-color-val">transparent</span>
+  );
+}</code>
+    </div>
+    <div id="demo" style="height: 150px; background: repeating-linear-gradient(-45deg, #3b82f6 0, #3b82f6 1px, transparent 1px, transparent 5px); border-radius: 4px; margin-bottom: 1rem;"></div>
+    <div style="display: grid; gap: 0.75rem; font-size: 0.875rem;">
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Angle:</span>
+        <input type="range" id="angle" min="-180" max="180" value="-45" style="flex: 1;">
+        <span style="min-width: 50px; text-align: right;" id="angle-display">-45°</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Line Color:</span>
+        <input type="color" id="line-color" value="#3b82f6" style="width: 50px; height: 30px;">
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Line Width:</span>
+        <input type="range" id="line-width" min="1" max="10" value="1" style="flex: 1;">
+        <span style="min-width: 50px; text-align: right;" id="line-width-display">1px</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Gap Width:</span>
+        <input type="range" id="gap-width" min="2" max="20" value="4" style="flex: 1;">
+        <span style="min-width: 50px; text-align: right;" id="gap-width-display">4px</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Gap Color:</span>
+        <input type="color" id="gap-color" value="#ffffff" style="width: 50px; height: 30px;">
+        <input type="checkbox" id="transparent" checked style="margin-left: 0.5rem;">
+        <span>Transparent</span>
+      </label>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const demo = document.getElementById('demo');
+  const angle = document.getElementById('angle');
+  const lineColor = document.getElementById('line-color');
+  const lineWidth = document.getElementById('line-width');
+  const gapWidth = document.getElementById('gap-width');
+  const gapColor = document.getElementById('gap-color');
+  const transparent = document.getElementById('transparent');
+
+  function update() {
+    const a = angle.value;
+    const lc = lineColor.value;
+    const lw = lineWidth.value;
+    const gw = gapWidth.value;
+    const gc = transparent.checked ? 'transparent' : gapColor.value;
+
+    demo.style.background = `repeating-linear-gradient(${a}deg, ${lc} 0, ${lc} ${lw}px, ${gc} ${lw}px, ${gc} ${+lw + +gw}px)`;
+
+    document.getElementById('angle-val').textContent = a;
+    document.getElementById('angle-display').textContent = a + '°';
+    document.getElementById('line-color-val').textContent = lc;
+    document.getElementById('line-width-val').textContent = lw;
+    document.getElementById('line-width-display').textContent = lw + 'px';
+    document.getElementById('gap-width-val').textContent = gw;
+    document.getElementById('gap-width-display').textContent = gw + 'px';
+    document.getElementById('gap-color-val').textContent = gc;
+  }
+
+  angle.oninput = lineColor.oninput = lineWidth.oninput = gapWidth.oninput = gapColor.oninput = transparent.onchange = update;
+})();
+</script>
+
+
+
+      <section id="z-index" class="function-section">
+  <h1><a href="#z-index">--z()</a></h1>
+  <p class="function-description">
+    Semantic z-index scale to avoid magic numbers and conflicts. Returns layer × 100. Layer reference: 1=dropdown, 2=sticky, 3=fixed, 4=drawer, 5=modal, 6=popover, 7=tooltip, 8=toast, 9=max.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--layer</code> <span style="color: var(--required-color);">(required)</span> — Layer number (1-9).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.dropdown { z-index: --z(1); }  /* 100 */
+.header { z-index: --z(3); }  /* 300 */
+.modal { z-index: --z(5); }  /* 500 */
+.tooltip { z-index: --z(7); }  /* 700 */</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+        <div style="font-weight: 600;">Layer 1 (z-index: 100)</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(1);">Dropdown menus</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+        <div style="font-weight: 600;">Layer 5 (z-index: 500)</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(1);">Modal dialogs</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; border-left: 4px solid var(--primary-color);">
+        <div style="font-weight: 600;">Layer 7 (z-index: 700)</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(1);">Tooltips</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="neg" class="function-section">
+  <h1><a href="#neg">--neg()</a></h1>
+  <p class="function-description">
+    Simple negation — useful in calc-heavy layouts. Negates any length value, making it negative.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--value</code> <span style="color: var(--required-color);">(required)</span> — Value to negate.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Bleed Effect</h3>
+    <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-bottom: --space(2);">
+      Extend content beyond container padding using negative margins.
+    </p>
+    <div class="code-block">
+      <code>.full-bleed {
+  margin-inline: --neg(var(--container-padding));
+}</code>
+    </div>
+    <div class="demo-box" style="background: var(--bg-secondary); border: 2px dashed var(--border-color); border-radius: 8px; padding: --space(6); margin: --space(4) 0;">
+      <div style="background: --alpha(var(--primary-color), 0.1); padding: --space(4); border-radius: 4px; margin-bottom: --space(4);">
+        <div style="font-weight: 600; margin-bottom: --space(1);">Normal Content</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Respects container padding</div>
+      </div>
+      <div style="background: var(--primary-color); color: white; padding: --space(4); border-radius: 4px; margin-inline: --neg(--space(6));">
+        <div style="font-weight: 600; margin-bottom: --space(1);">Full Bleed Content</div>
+        <div style="font-size: 0.875rem; opacity: 0.9;">margin-inline: --neg(--space(6))</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+
+      <section id="lerp" class="function-section">
+  <h1><a href="#lerp">--lerp()</a></h1>
+  <p class="function-description">
+    Interpolates between two values using a t parameter (0-1). When t=0, returns the first value; when t=1, returns the second value; when t=0.5, returns the midpoint. Hides the complex calc expression.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--a</code> <span style="color: var(--required-color);">(required)</span> — Start value.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--b</code> <span style="color: var(--required-color);">(required)</span> — End value.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--t</code> <span style="color: var(--optional-color);">(optional)</span> — Interpolation factor (0-1). Default: <code>0.5</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Interactive Demo</h3>
+
+    <div style="padding: --space(4); background: var(--code-bg); border-radius: 8px; margin-top: --space(4);">
+      <div style="display: flex; align-items: center; gap: --space(4); margin-bottom: --space(4);">
+        <label for="lerp-slider" style="font-weight: 500; min-width: 80px;">t = <span id="lerp-value">0.5</span></label>
+        <input type="range" id="lerp-slider" min="0" max="1" step="0.01" value="0.5" style="flex: 1; height: 8px;">
+      </div>
+
+      <div style="margin-bottom: --space(4);">
+        <div id="lerp-demo" style="--t: 0.5; width: --lerp(10%, 80%, var(--t)); height: 40px; background: var(--primary-color); border-radius: 4px; transition: width 0.1s ease;"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); color: var(--muted-text-color);">
+          <code>width: --lerp(10%, 80%, var(--t));</code>
+        </div>
+      </div>
+
+      <div>
+        <div id="lerp-demo-px" style="--t: 0.5; width: --lerp(50px, 400px, var(--t)); height: 40px; background: #10b981; border-radius: 4px; transition: width 0.1s ease;"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); color: var(--muted-text-color);">
+          <code>width: --lerp(50px, 400px, var(--t));</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const slider = document.getElementById('lerp-slider');
+      const valueDisplay = document.getElementById('lerp-value');
+      const demo = document.getElementById('lerp-demo');
+      const demoPx = document.getElementById('lerp-demo-px');
+
+      slider.addEventListener('input', function() {
+        const t = parseFloat(this.value);
+        valueDisplay.textContent = t.toFixed(2);
+        demo.style.setProperty('--t', t);
+        demoPx.style.setProperty('--t', t);
+      });
+    })();
+  </script>
+</section>
+
+
+      <section id="circle" class="function-section">
+  <h1><a href="#circle">--circle-x() / --circle-y()</a></h1>
+  <p class="function-description">
+    Calculate X and Y coordinates on a circle using radius and angle. Uses cosine for X and sine for Y positions.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--radius</code> <span style="color: var(--required-color);">(required)</span> — Circle radius.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--angle</code> <span style="color: var(--optional-color);">(optional)</span> — Angle in degrees. Default: <code>0deg</code>.
+      </li>
+    </ul>
+  </div>
+  <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(2);">
+    Both <code>--circle-x()</code> and <code>--circle-y()</code> use the same parameters. <code>--circle-x()</code> uses cosine, <code>--circle-y()</code> uses sine.
+  </p>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.orbit {
+  left: calc(50% + --circle-x(100px, 45deg));  /* 45° X position */
+  top: calc(50% + --circle-y(100px, 45deg));   /* 45° Y position */
+}</code>
+    </div>
+    <div class="demo-box" style="position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+      <div style="position: relative; width: 200px; height: 200px; border: 2px dashed var(--primary-color); border-radius: 50%;">
+        <div style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%; transform: translate(-50%, -50%);"></div>
+        <div style="position: absolute; top: calc(50% - 4px + calc(100px * sin(45deg))); left: calc(50% - 4px + calc(100px * cos(45deg))); width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>
+        <div style="position: absolute; top: calc(50% - 4px + calc(100px * sin(90deg))); left: calc(50% - 4px + calc(100px * cos(90deg))); width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;"></div>
+        <div style="position: absolute; top: calc(50% - 4px + calc(100px * sin(180deg))); left: calc(50% - 4px + calc(100px * cos(180deg))); width: 8px; height: 8px; background: #ef4444; border-radius: 50%;"></div>
+        <div style="position: absolute; top: calc(50% - 4px + calc(100px * sin(270deg))); left: calc(50% - 4px + calc(100px * cos(270deg))); width: 8px; height: 8px; background: #8b5cf6; border-radius: 50%;"></div>
+      </div>
+      <div style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; font-size: 0.875rem; color: var(--muted-text-color);">
+        <div>Green: 45°, Orange: 90°, Red: 180°, Purple: 270°</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="modular" class="function-section">
+  <h1><a href="#modular">--modular()</a></h1>
+  <p class="function-description">
+    Calculate values using a modular scale (typographic ratio). Hides the pow calculation for creating consistent type scales.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--step</code> <span style="color: var(--required-color);">(required)</span> — Scale step (can be negative for smaller values).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--base</code> <span style="color: var(--optional-color);">(optional)</span> — Base value. Default: <code>1rem</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--ratio</code> <span style="color: var(--optional-color);">(optional)</span> — Scale ratio. Default: <code>1.25</code> (major third).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>:root {
+  --type-base: 1rem;
+  --type-ratio: 1.25;
+}
+
+h1 {
+  font-size: --modular(4, var(--type-base), var(--type-ratio));
+}
+
+small {
+  font-size: --modular(-1, var(--type-base), var(--type-ratio));
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(2);">
+      <div style="font-size: calc(1rem * pow(1.25, -1)); color: var(--muted-text-color);">Step -1: Smaller</div>
+      <div style="font-size: calc(1rem * pow(1.25, 0));">Step 0: Base (1rem)</div>
+      <div style="font-size: calc(1rem * pow(1.25, 1)); font-weight: 600;">Step 1: 1.25rem</div>
+      <div style="font-size: calc(1rem * pow(1.25, 2)); font-weight: 600;">Step 2: 1.5625rem</div>
+      <div style="font-size: calc(1rem * pow(1.25, 3)); font-weight: 600;">Step 3: 1.953125rem</div>
+      <div style="font-size: calc(1rem * pow(1.25, 4)); font-weight: 600;">Step 4: 2.44140625rem</div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="poly-angle" class="function-section">
+  <h1><a href="#poly-angle">--poly-angle()</a></h1>
+  <p class="function-description">
+    Calculate the angle for a vertex in a regular polygon. Useful for creating polygon shapes with CSS transforms.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--sides</code> <span style="color: var(--required-color);">(required)</span> — Number of sides in polygon.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--index</code> <span style="color: var(--optional-color);">(optional)</span> — Vertex index (0-based). Default: <code>0</code>.
+      </li>
+    </ul>
+  </div>
+  <p style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(2);">
+    Formula: (360deg / sides × index) - 90deg
+  </p>
+
+  <div class="example-group">
+    <h3>Interactive Demo</h3>
+
+    <div style="padding: --space(4); background: var(--code-bg); border-radius: 8px; margin-top: --space(4);">
+      <div style="display: flex; flex-direction: column; gap: --space(4); margin-bottom: --space(4);">
+        <div style="display: flex; align-items: center; gap: --space(4);">
+          <label for="poly-sides-slider" style="font-weight: 500; min-width: 100px;">Sides = <span id="poly-sides-value">6</span></label>
+          <input type="range" id="poly-sides-slider" min="3" max="12" step="1" value="6" style="flex: 1; height: 8px;">
+        </div>
+        <div style="display: flex; align-items: center; gap: --space(4);">
+          <label for="poly-index-slider" style="font-weight: 500; min-width: 100px;">Index = <span id="poly-index-value">0</span></label>
+          <input type="range" id="poly-index-slider" min="0" max="5" step="1" value="0" style="flex: 1; height: 8px;">
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: --space(4);">
+        <div id="poly-demo" style="--sides: 6; --index: 0; position: relative; width: 200px; height: 200px; margin: 0 auto;">
+          <div style="position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; transform: translate(-50%, -50%); border: 2px solid var(--primary-color); border-radius: 50%;"></div>
+          <div class="vertex" data-i="0" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 0)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="1" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 1)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="2" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 2)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="3" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 3)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="4" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 4)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="5" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 5)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="6" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 6)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="7" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 7)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="8" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 8)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="9" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 9)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="10" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 10)); transform-origin: center 80px;"></div>
+          <div class="vertex" data-i="11" style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #9ca3af; border-radius: 50%; transform: translate(-50%, -50%) translateY(-80px) rotate(--poly-angle(var(--sides), 11)); transform-origin: center 80px;"></div>
+        </div>
+        <div style="font-size: 0.875rem; margin-top: --space(2); color: var(--muted-text-color);">
+          <code>transform: rotate(--poly-angle(<span id="code-sides">6</span>, <span id="code-index">0</span>));</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const $ = id => document.getElementById(id);
+      const [sides, index, demo] = ['poly-sides-slider', 'poly-index-slider', 'poly-demo'].map($);
+      const vertices = demo.querySelectorAll('.vertex');
+
+      const update = () => {
+        const s = +sides.value, i = Math.min(+index.value, s - 1);
+
+        // Update displays
+        [['poly-sides-value', s], ['poly-index-value', i],
+         ['code-sides', s], ['code-index', i]].forEach(([id, val]) => $(id).textContent = val);
+
+        index.max = s - 1;
+        index.value = i;
+
+        // Update CSS custom properties
+        demo.style.setProperty('--sides', s);
+        demo.style.setProperty('--index', i);
+
+        // Show/hide and style vertices
+        vertices.forEach(v => {
+          const idx = +v.dataset.i;
+          v.style.display = idx < s ? 'block' : 'none';
+          v.style.width = v.style.height = idx === i ? '12px' : '8px';
+          v.style.background = idx === i ? 'var(--primary-color)' : '#9ca3af';
+        });
+      };
+
+      sides.oninput = index.oninput = update;
+      update();
+    })();
+  </script>
+</section>
+
+
+
+      <section id="to-rem" class="function-section">
+  <h1><a href="#to-rem">--to-rem()</a></h1>
+  <p class="function-description">
+    Convert a pixel value to rem units. Base pixel size defaults to --rem-base (or 16px). Useful for converting legacy pixel-based designs to rem-based responsive layouts.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--px</code> <span style="color: var(--required-color);">(required)</span> — Pixel value (unitless).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--base</code> <span style="color: var(--optional-color);">(optional)</span> — Base pixel size for conversion. Defaults to <code>var(--rem-base, 16)</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.legacy-compat {
+  font-size: --to-rem(18);  /* 1.125rem */
+  padding: --to-rem(24);    /* 1.5rem */
+}
+
+.custom-base {
+  font-size: --to-rem(18, 10);  /* Custom base */
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(3);">
+      <div style="font-size: calc(16 * 1rem / 16);">16px = 1rem</div>
+      <div style="font-size: calc(18 * 1rem / 16);">18px = 1.125rem</div>
+      <div style="font-size: calc(24 * 1rem / 16);">24px = 1.5rem</div>
+      <div style="font-size: calc(32 * 1rem / 16);">32px = 2rem</div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="to-px" class="function-section">
+  <h1><a href="#to-px">--to-px()</a></h1>
+  <p class="function-description">
+    Convert a rem value to pixels (assumes 16px base). Useful when you need pixel values for legacy systems or specific calculations.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--rem</code> <span style="color: var(--required-color);">(required)</span> — REM value (unitless).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.legacy-system {
+  width: --to-px(10);   /* 160px */
+  height: --to-px(5);   /* 80px */
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(3);">
+      <div style="font-size: 0.875rem;">1rem = 16px</div>
+      <div style="font-size: 0.875rem;">2rem = 32px</div>
+      <div style="font-size: 0.875rem;">5rem = 80px</div>
+      <div style="font-size: 0.875rem;">10rem = 160px</div>
+    </div>
+  </div>
+</section>
+
+
+
+      <section id="not" class="function-section">
+  <h1><a href="#not">--not()</a></h1>
+  <p class="function-description">
+    Boolean negation. Returns 0 if input is 1, and 1 if input is 0. Useful for toggling CSS properties based on state variables.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--value</code> <span style="color: var(--required-color);">(required)</span> — Switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.toggle {
+  --is-hidden: 0;
+  opacity: --not(var(--is-hidden));  /* 1 = visible */
+}
+
+.toggle.hidden {
+  --is-hidden: 1;
+  /* opacity becomes 0 = invisible */
+}</code>
+    </div>
+    <div class="demo-box" style="display: flex; flex-direction: column; gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px;">
+        <div style="font-weight: 600;">Input: 1</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(1);">Output: 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px;">
+        <div style="font-weight: 600;">Input: 0</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color); margin-top: --space(1);">Output: 1</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="and" class="function-section">
+  <h1><a href="#and">--and()</a></h1>
+  <p class="function-description">
+    Logical AND operation. Returns 1 only if both operands are 1, otherwise returns 0. Useful for conditional styling based on multiple state variables.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--a</code> <span style="color: var(--required-color);">(required)</span> — First switch variable (0 or 1).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--b</code> <span style="color: var(--required-color);">(required)</span> — Second switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.button {
+  --is-hovered: 1;
+  --is-enabled: 1;
+  opacity: --and(var(--is-hovered), var(--is-enabled));
+}</code>
+    </div>
+    <div class="demo-box" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 AND 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 AND 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 AND 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 AND 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="or" class="function-section">
+  <h1><a href="#or">--or()</a></h1>
+  <p class="function-description">
+    Logical OR operation. Returns 1 if at least one operand is 1, otherwise returns 0. Useful for fallback styling when any condition is met.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--a</code> <span style="color: var(--required-color);">(required)</span> — First switch variable (0 or 1).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--b</code> <span style="color: var(--required-color);">(required)</span> — Second switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.alert {
+  --is-error: 0;
+  --is-warning: 1;
+  display: block;
+  opacity: --or(var(--is-error), var(--is-warning));  /* 1 */
+}</code>
+    </div>
+    <div class="demo-box" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 OR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 OR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 OR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 OR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="xor" class="function-section">
+  <h1><a href="#xor">--xor()</a></h1>
+  <p class="function-description">
+    Exclusive OR operation. Returns 1 if exactly one operand is 1 (they differ), otherwise returns 0. Useful for detecting state changes or differences.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--a</code> <span style="color: var(--required-color);">(required)</span> — First switch variable (0 or 1).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--b</code> <span style="color: var(--required-color);">(required)</span> — Second switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.highlight-when-different {
+  --user-theme: 1;
+  --system-theme: 0;
+  opacity: --xor(var(--user-theme), var(--system-theme));  /* 1 */
+}</code>
+    </div>
+    <div class="demo-box" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 XOR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 XOR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 XOR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 XOR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="nand" class="function-section">
+  <h1><a href="#nand">--nand()</a></h1>
+  <p class="function-description">
+    NOT AND operation. Returns 0 only if both operands are 1, otherwise returns 1. The inverse of AND operation.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--a</code> <span style="color: var(--required-color);">(required)</span> — First switch variable (0 or 1).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--b</code> <span style="color: var(--required-color);">(required)</span> — Second switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.disabled-state {
+  --is-loading: 0;
+  --is-error: 0;
+  pointer-events: --nand(var(--is-loading), var(--is-error));
+}</code>
+    </div>
+    <div class="demo-box" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 NAND 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 NAND 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 NAND 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 NAND 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="nor" class="function-section">
+  <h1><a href="#nor">--nor()</a></h1>
+  <p class="function-description">
+    NOT OR operation. Returns 1 only if both operands are 0, otherwise returns 0. The inverse of OR operation.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--a</code> <span style="color: var(--required-color);">(required)</span> — First switch variable (0 or 1).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--b</code> <span style="color: var(--required-color);">(required)</span> — Second switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.hidden-state {
+  --has-error: 0;
+  --has-warning: 0;
+  display: none;
+  opacity: --nor(var(--has-error), var(--has-warning));  /* 1 = hidden */
+}</code>
+    </div>
+    <div class="demo-box" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 NOR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 NOR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 NOR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 NOR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <section id="xnor" class="function-section">
+  <h1><a href="#xnor">--xnor()</a></h1>
+  <p class="function-description">
+    Exclusive NOR operation. Returns 1 if both operands are the same (both 0 or both 1), otherwise returns 0. The inverse of XOR operation.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--a</code> <span style="color: var(--required-color);">(required)</span> — First switch variable (0 or 1).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--b</code> <span style="color: var(--required-color);">(required)</span> — Second switch variable (0 or 1).
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.match-state {
+  --value-a: 1;
+  --value-b: 1;
+  opacity: --xnor(var(--value-a), var(--value-b));  /* 1 = match */
+}</code>
+    </div>
+    <div class="demo-box" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: --space(3);">
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 XNOR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">1 XNOR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 XNOR 1</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 0</div>
+      </div>
+      <div style="background: var(--code-bg); padding: --space(3); border-radius: 4px; text-align: center;">
+        <div style="font-size: 0.875rem;">0 XNOR 0</div>
+        <div style="font-weight: 600; margin-top: --space(1);">= 1</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+  </div>
+  <script>
+  // Update active sidebar link on scroll
+  const sections = document.querySelectorAll('.function-section');
+  const sidebarLinks = document.querySelectorAll('.sidebar nav a[data-function]');
+
+  function updateActiveLink() {
+    const scrollPos = window.scrollY + 200;
+
+    sections.forEach((section, index) => {
+      const top = section.offsetTop;
+      const bottom = top + section.offsetHeight;
+      const id = section.getAttribute('id');
+
+      if (scrollPos >= top && scrollPos < bottom) {
+        sidebarLinks.forEach(link => link.classList.remove('active'));
+        const activeLink = document.querySelector(`.sidebar nav a[href="#${id}"]`);
+        if (activeLink) {
+          activeLink.classList.add('active');
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveLink);
+  window.addEventListener('load', updateActiveLink);
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
+  // Interactive demo handlers
+  document.querySelectorAll('[data-demo]').forEach(demo => {
+    const type = demo.getAttribute('data-demo');
+
+    if (type === 'alpha') {
+      const slider = demo.querySelector('input[type="range"]');
+      const colorInput = demo.querySelector('input[type="color"]');
+      const box = demo.querySelector('.color-demo');
+
+      if (slider && colorInput && box) {
+        const updateAlpha = () => {
+          const opacity = slider.value;
+          const color = colorInput.value;
+          box.style.backgroundColor = `oklch(from ${color} l c h / ${opacity})`;
+          demo.querySelector('.value-display').textContent = `Opacity: ${opacity}`;
+        };
+
+        slider.addEventListener('input', updateAlpha);
+        colorInput.addEventListener('input', updateAlpha);
+        updateAlpha();
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
