@@ -1,0 +1,57 @@
+<section id="alpha" class="function-section">
+  <h1><a href="#alpha">--alpha()</a></h1>
+  <p class="function-description">
+    Creates a semi-transparent version of any color. Works exactly like CSS opacity property:
+    0 = fully transparent (invisible), 1 = fully opaque (solid), 0.5 = 50% opaque.
+  </p>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.overlay {
+  background: --alpha(var(--primary-color), 0.2);  /* 20% opaque */
+}
+
+.backdrop {
+  background: --alpha(var(--brand), 0.85);  /* 85% opaque */
+}</code>
+    </div>
+    <div class="demo-box" data-demo="alpha">
+      <div class="interactive-controls">
+        <div class="control-group">
+          <label>Color</label>
+          <input type="color" value="var(--primary-color)">
+        </div>
+        <div class="control-group">
+          <label>Opacity</label>
+          <input type="range" min="0" max="1" step="0.01" value="0.5">
+        </div>
+        <div class="value-display" style="align-self: center; font-weight: 600;">Opacity: 0.5</div>
+      </div>
+      <div class="color-demo" style="width: 100%; height: 100px; border-radius: 6px; background: oklch(from var(--primary-color) l c h / 0.5);"></div>
+    </div>
+  </div>
+
+  <div class="example-group">
+    <h3>Examples</h3>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l c h / 0.1);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">10% opacity</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l c h / 0.3);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">30% opacity</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l c h / 0.5);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">50% opacity</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l c h / 0.8);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">80% opacity</div>
+      </div>
+    </div>
+  </div>
+</section>
+

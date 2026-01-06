@@ -1,0 +1,40 @@
+<section id="contrast-text" class="function-section">
+  <h1><a href="#contrast-text">--contrast-text()</a></h1>
+  <p class="function-description">
+    Auto-select black or white text depending on background luminance for optimal readability. Uses OKLCH lightness to determine the best contrast.
+  </p>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.badge {
+  background: var(--badge-color);
+  color: --contrast-text(var(--badge-color));  /* Auto black or white */
+}
+
+.card {
+  background: --alpha(var(--primary), 0.1);
+  color: --contrast-text(--alpha(var(--primary), 0.1));
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item" style="background: var(--primary-color); color: oklch(from var(--primary-color) calc((0.6 - l) * infinity) 0 0); padding: --space(4); border-radius: 6px;">
+        <div style="font-weight: 600;">Dark Background</div>
+        <div style="font-size: 0.875rem; margin-top: --space(1);">White text</div>
+      </div>
+      <div class="demo-item" style="background: #f3f4f6; color: oklch(from #f3f4f6 calc((0.6 - l) * infinity) 0 0); padding: --space(4); border-radius: 6px;">
+        <div style="font-weight: 600;">Light Background</div>
+        <div style="font-size: 0.875rem; margin-top: --space(1);">Black text</div>
+      </div>
+      <div class="demo-item" style="background: #10b981; color: oklch(from #10b981 calc((0.6 - l) * infinity) 0 0); padding: --space(4); border-radius: 6px;">
+        <div style="font-weight: 600;">Medium Background</div>
+        <div style="font-size: 0.875rem; margin-top: --space(1);">Auto contrast</div>
+      </div>
+      <div class="demo-item" style="background: #ef4444; color: oklch(from #ef4444 calc((0.6 - l) * infinity) 0 0); padding: --space(4); border-radius: 6px;">
+        <div style="font-weight: 600;">Red Background</div>
+        <div style="font-size: 0.875rem; margin-top: --space(1);">Auto contrast</div>
+      </div>
+    </div>
+  </div>
+</section>
+

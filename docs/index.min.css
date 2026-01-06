@@ -1,0 +1,51 @@
+@function --alpha(--color <color>, --opacity <number>: 0.5) returns <color>{result:oklch(from var(--color) l c h/var(--opacity))}@function --lighten(--color <color>, --amount <number>: 0.1) returns <color>{result:oklch(from var(--color) calc(l + var(--amount)) c h)}@function --darken(--color <color>, --amount <number>: 0.1) returns <color>{result:oklch(from var(--color) calc(l - var(--amount)) c h)}@function --saturate(
+  --color <color>,
+  --amount <number>: 0.2
+) returns <color>{result:oklch(from var(--color) l calc(c + c * var(--amount)) h)}@function --desaturate(
+  --color <color>,
+  --amount <number>: 0.2
+) returns <color>{result:oklch(from var(--color) l calc(c - c * var(--amount)) h)}@function --mix(
+  --color1 <color>,
+  --color2 <color>,
+  --weight <percentage>: 50%
+) returns <color>{result:color-mix(in oklch,var(--color1) var(--weight),var(--color2))}@function --contrast-text(--bg <color>) returns <color>{result:oklch(from var(--bg) calc((.6 - l) * infinity) 0 0)}@function --grayscale(--color <color>) returns <color>{result:oklch(from var(--color) l 0 h)}@function --invert(--color <color>) returns <color>{result:oklch(from var(--color) calc(1 - l) c h)}@function --complement(--color <color>) returns <color>{result:oklch(from var(--color) l c calc(h + 180))}@function --space(--multiplier <number>, --base <length>: var(--space-base, 0.25rem)) returns <length>{result:calc(var(--base) * var(--multiplier))}@function --fluid(
+  --min <length>,
+  --max <length>,
+  --min-vw <length>: 375px,
+  --max-vw <length>: 1440px
+) returns <length>{--slope:calc((var(--max) - var(--min)) / (var(--max-vw) - var(--min-vw)));--intercept:calc(var(--min) - var(--slope) * var(--min-vw));result:clamp(var(--min),calc(var(--intercept) + var(--slope) * 100vw),var(--max))}@function --fluid-container(
+  --min <length>,
+  --max <length>,
+  --min-cqw <length>: 20ch,
+  --max-cqw <length>: 65ch
+) returns <length>{--slope:calc((var(--max) - var(--min)) / (var(--max-cqw) - var(--min-cqw)));--intercept:calc(var(--min) - var(--slope) * var(--min-cqw));result:clamp(var(--min),calc(var(--intercept) + var(--slope) * 100cqw),var(--max))}@function --ratio-height(
+  --width <length>,
+  --ratio-w <number>: 16,
+  --ratio-h <number>: 9
+) returns <length>{result:calc(var(--width) * var(--ratio-h) / var(--ratio-w))}@function --shadow(
+  --level <number>,
+  --color <color>: oklch(0% 0 0 / 0.1)
+){--y:calc(var(--level) * 2px);--blur:calc(var(--level) * 4px);--spread:calc(var(--level) * -1px);result:0 var(--y) var(--blur) var(--spread) var(--color),0 calc(var(--y) * .5) calc(var(--blur) * .5) calc(var(--spread) * .5) var(--color)}@function --diagonal-lines(
+  --angle <angle>: -45deg,
+  --line-color <color>: currentColor,
+  --line-width <length>: 1px,
+  --gap-width <length>: 4px,
+  --gap-color <color>: transparent
+) returns <image>{result:repeating-linear-gradient(var(--angle),var(--line-color) 0,var(--line-color) calc(var(--line-width) - 1px),var(--gap-color) calc(var(--line-width) + 1px),var(--gap-color) calc(var(--line-width) + var(--gap-width)))}@function --z(--layer <number>) returns <integer>{result:calc(var(--layer) * 100)}@function --neg(--value <length>) returns <length>{result:calc(var(--value) * -1)}@function --lerp(
+  --a <length-percentage>,
+  --b <length-percentage>,
+  --t <number>: 0.5
+) returns <length-percentage>{result:calc(var(--a) * (1 - var(--t)) + var(--b) * var(--t))}@function --circle-x(
+  --radius <length>,
+  --angle <angle>: 0deg
+) returns <length>{result:calc(var(--radius) * cos(var(--angle)))}@function --circle-y(
+  --radius <length>,
+  --angle <angle>: 0deg
+) returns <length>{result:calc(var(--radius) * sin(var(--angle)))}@function --modular(
+  --step <number>,
+  --base <length|number>: 1rem,
+  --ratio <number>: 1.25
+) returns <length|number>{result:calc(var(--base) * pow(var(--ratio), var(--step)))}@function --poly-angle(
+  --sides <number>,
+  --index <number>: 0
+) returns <angle>{result:calc(1turn / var(--sides) * var(--index) - 90deg)}@function --to-rem(--px <number>, --base <number>: var(--rem-base, 16)) returns <length>{result:calc(var(--px) * 1rem / var(--base))}@function --to-px(--rem <number>) returns <length>{result:calc(var(--rem) * 16 * 1px)}@function --not(--value <number>) returns <number>{result:calc(1 - var(--value))}@function --and(--a <number>, --b <number>) returns <number>{result:calc(var(--a) * var(--b))}@function --or(--a <number>, --b <number>) returns <number>{result:calc(1 - (1 - var(--a)) * (1 - var(--b)))}@function --xor(--a <number>, --b <number>) returns <number>{result:calc((var(--a) - var(--b)) * (var(--a) - var(--b)))}@function --nand(--a <number>, --b <number>) returns <number>{result:calc(1 - var(--a) * var(--b))}@function --nor(--a <number>, --b <number>) returns <number>{result:calc((1 - var(--a)) * (1 - var(--b)))}@function --xnor(--a <number>, --b <number>) returns <number>{result:calc(1 - (var(--a) - var(--b)) * (var(--a) - var(--b)))}

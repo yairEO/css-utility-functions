@@ -1,0 +1,38 @@
+<section id="saturate" class="function-section">
+  <h1><a href="#saturate">--saturate()</a></h1>
+  <p class="function-description">
+    Boost a color's saturation/chroma. Use decimal values (0.4 = 40%, 1.0 = 100%). Increases the chroma component of the color.
+  </p>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.vibrant {
+  background: --saturate(var(--primary), 0.4);  /* 40% more saturated */
+}
+
+.accent {
+  color: --saturate(var(--primary-color), 0.5);  /* 50% more saturated */
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <div class="color-demo" style="background: var(--primary-color);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">Original</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l calc(c + 0.1) h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+0.1 saturation</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l calc(c + 0.2) h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+0.2 saturation</div>
+      </div>
+      <div class="demo-item">
+        <div class="color-demo" style="background: oklch(from var(--primary-color) l calc(c + 0.3) h);"></div>
+        <div style="font-size: 0.875rem; margin-top: --space(2);">+0.3 saturation</div>
+      </div>
+    </div>
+  </div>
+</section>
+

@@ -11,13 +11,14 @@
   ],
   "scripts": {
     "build": "postcss src/index.css -o dist/index.css",
-    "build:min": "postcss src/index.css -o dist/index.min.css --env production",
+    "build:min": "postcss src/index.css -o dist/index.min.css --env production && cp dist/index.min.css docs/index.min.css",
     "build:html": "node build-html.js",
     "build:all": "npm run build:html && npm run build && npm run build:min",
     "watch": "nodemon --watch src --ext css --exec \"npm run build\"",
     "watch:html": "node build-html.js --watch",
     "dev": "concurrently \"npm run watch:html\" \"npm run watch\"",
-    "prebuild": "npm run build:html"
+    "prebuild": "npm run build:html",
+    "version": "concurrently \"npm run build:html\" \"npm run build\" \"npm run build:min\""
   },
   "keywords": [
     "css",
