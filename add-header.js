@@ -32,12 +32,20 @@ const header = `/**
 
 `;
 
-// Read output file and prepend header if not already present
-let css = fs.readFileSync(outputFile, 'utf8');
+// Read output file and update header to match current package.json version
+const css = fs.readFileSync(outputFile, 'utf8');
 
-if (!css.includes(`v${pkg.version}`)) {
-  // Remove any existing header comment block (/** ... */) at the start
-  css = css.replace(/^\/\*\*[\s\S]*?\*\/\s*\n?/, '');
-  fs.writeFileSync(outputFile, header + css, 'utf8');
+// Remove any existing header comment block (/** ... */) at the start
+const cssWithoutHeader = css.replace(/^\/\*\*[\s\S]*?\*\/\s*\n?/, '');
+
+// Prepend the new header with current version from package.json
+const newContent = header + cssWithoutHeader;
+
+// Only write if something changed (optimization)
+if (css !== newContent) {
+  fs.writeFileSync(outputFile, newContent, 'utf8');
+  console.log(`✓ Updated header in ${path.basename(outputFile)} to v${pkg.version}`);
+} else {
+  console.log(`✓ Header already up-to-date in ${path.basename(outputFile)}`);
 }
 
