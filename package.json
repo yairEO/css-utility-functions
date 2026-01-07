@@ -18,7 +18,7 @@
     "watch:html": "node build-html.js --watch",
     "dev": "concurrently \"npm run watch:html\" \"npm run watch\"",
     "prebuild": "npm run build:html",
-    "postversion": "npm run build:all"
+    "version": "npm run build:all"
   },
   "keywords": [
     "css",
