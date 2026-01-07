@@ -1,64 +1,148 @@
 <script>
-  // Update active sidebar link on scroll
-  const sections = document.querySelectorAll('.function-section');
-  const sidebarLinks = document.querySelectorAll('.sidebar nav a[data-function]');
+  (function() {
+    'use strict';
 
-  function updateActiveLink() {
-    const scrollPos = window.scrollY + 200;
+    // Constants
+    const SCROLL_OFFSET = 200;
+    const THROTTLE_DELAY = 100;
 
-    sections.forEach((section, index) => {
-      const top = section.offsetTop;
-      const bottom = top + section.offsetHeight;
-      const id = section.getAttribute('id');
+    // Cache DOM elements
+    const sections = Array.from(document.querySelectorAll('.function-section'));
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar nav a[data-function]'));
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    const demos = document.querySelectorAll('[data-demo]');
 
-      if (scrollPos >= top && scrollPos < bottom) {
-        sidebarLinks.forEach(link => link.classList.remove('active'));
-        const activeLink = document.querySelector(`.sidebar nav a[href="#${id}"]`);
-        if (activeLink) {
-          activeLink.classList.add('active');
-        }
+    // Create link map for O(1) lookup
+    const linkMap = new Map();
+    sidebarLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href) {
+        linkMap.set(href.slice(1), link);
       }
     });
-  }
 
-  window.addEventListener('scroll', updateActiveLink);
-  window.addEventListener('load', updateActiveLink);
+    // Throttle utility
+    function throttle(func, delay) {
+      let timeoutId;
+      let lastExecTime = 0;
+      return function(...args) {
+        const currentTime = Date.now();
+        if (currentTime - lastExecTime > delay) {
+          func.apply(this, args);
+          lastExecTime = currentTime;
+        } else {
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => {
+            func.apply(this, args);
+            lastExecTime = Date.now();
+          }, delay - (currentTime - lastExecTime));
+        }
+      };
+    }
 
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+    // Check if element is visible in viewport
+    function isElementVisible(element, container) {
+      const elementRect = element.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      return elementRect.top >= containerRect.top && elementRect.bottom <= containerRect.bottom;
+    }
+
+    // Scroll sidebar to show active link
+    function scrollToActiveLink(link) {
+      if (!sidebar || !link) return;
+
+      if (!isElementVisible(link, sidebar)) {
+        link.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'nearest'
+        });
+      }
+    }
+
+    // Update active sidebar link based on scroll position
+    function updateActiveLink() {
+      const scrollPos = window.scrollY + SCROLL_OFFSET;
+      let currentActiveLink = null;
+
+      // Find active section using early exit
+      for (const section of sections) {
+        const top = section.offsetTop;
+        const bottom = top + section.offsetHeight;
+        const id = section.id;
+
+        if (scrollPos >= top && scrollPos < bottom) {
+          const link = linkMap.get(id);
+          if (link) {
+            currentActiveLink = link;
+          }
+          break;
+        }
+      }
+
+      // Update active state efficiently
+      if (currentActiveLink) {
+        const wasAlreadyActive = currentActiveLink.classList.contains('active');
+
+        if (!wasAlreadyActive) {
+          sidebarLinks.forEach(link => link.classList.remove('active'));
+          currentActiveLink.classList.add('active');
+          scrollToActiveLink(currentActiveLink);
+        }
+      }
+    }
+
+    // Smooth scroll handler for anchor links
+    function handleAnchorClick(e) {
+      const href = this.getAttribute('href');
+      if (!href || href === '#') return;
+
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
+      const target = document.querySelector(href);
       if (target) {
         target.scrollIntoView({
           behavior: 'smooth',
           block: 'start'
         });
       }
-    });
-  });
+    }
 
-  // Interactive demo handlers
-  document.querySelectorAll('[data-demo]').forEach(demo => {
-    const type = demo.getAttribute('data-demo');
+    // Demo handlers registry
+    const demoHandlers = {
+      alpha(demo) {
+        const slider = demo.querySelector('input[type="range"]');
+        const colorInput = demo.querySelector('input[type="color"]');
+        const box = demo.querySelector('.color-demo');
+        const valueDisplay = demo.querySelector('.value-display');
 
-    if (type === 'alpha') {
-      const slider = demo.querySelector('input[type="range"]');
-      const colorInput = demo.querySelector('input[type="color"]');
-      const box = demo.querySelector('.color-demo');
+        if (!slider || !colorInput || !box || !valueDisplay) return;
 
-      if (slider && colorInput && box) {
         const updateAlpha = () => {
           const opacity = slider.value;
           const color = colorInput.value;
           box.style.backgroundColor = `oklch(from ${color} l c h / ${opacity})`;
-          demo.querySelector('.value-display').textContent = `Opacity: ${opacity}`;
+          valueDisplay.textContent = `Opacity: ${opacity}`;
         };
 
         slider.addEventListener('input', updateAlpha);
         colorInput.addEventListener('input', updateAlpha);
         updateAlpha();
       }
-    }
-  });
+    };
+
+    // Initialize demos
+    demos.forEach(demo => {
+      const type = demo.getAttribute('data-demo');
+      const handler = demoHandlers[type];
+      if (handler) {
+        handler(demo);
+      }
+    });
+
+    // Initialize event listeners
+    window.addEventListener('scroll', throttle(updateActiveLink, THROTTLE_DELAY));
+    window.addEventListener('load', updateActiveLink);
+    anchorLinks.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
+  })();
 </script>

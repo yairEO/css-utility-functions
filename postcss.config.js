@@ -10,7 +10,11 @@ module.exports = (ctx) => ({
           'default',
           {
             discardComments: {
-              removeAll: true,
+              removeAll: false,
+              remove: (comment) => {
+                // Preserve header comment (contains "CSS Utility Functions")
+                return !comment.includes('CSS Utility Functions');
+              },
             },
             // Disable calc optimization to preserve CSS @function syntax
             calc: false,

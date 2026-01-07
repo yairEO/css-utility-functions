@@ -1,3 +1,16 @@
+/**
+ * CSS Utility Functions v1.0.2
+ * Author: Yair Even-Or
+ * Repository: https://github.com/yairEO/css-utility-functions
+ *
+ * A collection of reusable CSS custom functions using the @function syntax.
+ * Import this file to use all utility functions in your project.
+ *
+ * ⚠️ Note: CSS @function is experimental. Check browser support before production use.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/@function
+ */
+
 @function --alpha(--color <color>, --opacity <number>: 0.5) returns <color>{result:oklch(from var(--color) l c h/var(--opacity))}@function --lighten(--color <color>, --amount <number>: 0.1) returns <color>{result:oklch(from var(--color) calc(l + var(--amount)) c h)}@function --darken(--color <color>, --amount <number>: 0.1) returns <color>{result:oklch(from var(--color) calc(l - var(--amount)) c h)}@function --saturate(
   --color <color>,
   --amount <number>: 0.2

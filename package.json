@@ -10,8 +10,8 @@
     "README.md"
   ],
   "scripts": {
-    "build": "postcss src/index.css -o dist/index.css",
-    "build:min": "postcss src/index.css -o dist/index.min.css --env production && cp dist/index.min.css docs/index.min.css",
+    "build": "postcss src/index.css -o dist/index.css && node add-header.js dist/index.css",
+    "build:min": "postcss src/index.css -o dist/index.min.css --env production && node add-header.js dist/index.min.css && cp dist/index.min.css docs/index.min.css",
     "build:html": "node build-html.js",
     "build:all": "npm run build:html && npm run build && npm run build:min",
     "watch": "nodemon --watch src --ext css --exec \"npm run build\"",
