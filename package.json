@@ -1,6 +1,6 @@
 {
   "name": "css-utility-functions",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A collection of reusable CSS custom native functions using the @function syntax",
   "main": "dist/index.css",
   "style": "dist/index.css",
