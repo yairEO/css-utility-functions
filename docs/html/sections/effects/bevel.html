@@ -1,0 +1,115 @@
+<section id="bevel" class="function-section">
+  <header>
+    <h1><a href="#bevel">--bevel()</a></h1>
+    <a href="https://github.com/yairEO/css-utility-functions/blob/main/src/effects/bevel.css" target="_blank">Source code</a>
+  </header>
+  <p class="function-description">
+    Inset elevation shadows for embossed/debossed effects. Creates recessed appearance for pressed buttons, input fields, and sunken UI elements. Higher levels create more pronounced inset shadows.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--level</code> <span style="color: var(--required-color);">(required)</span> — Elevation level (1-5).
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--color</code> <span style="color: var(--optional-color);">(optional)</span> — Shadow color. Default: <code>oklch(0% 0 0 / 0.1)</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--angle</code> <span style="color: var(--optional-color);">(optional)</span> — Light source direction angle. Default: <code>90deg</code> (lit from bottom). Use <code>270deg</code> for top lighting, <code>45deg</code> for top-right lighting.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Basic Usage</h3>
+    <div class="code-block">
+      <code>.pressed-button {
+  box-shadow: --bevel(2);
+}
+
+.input-field {
+  box-shadow: --bevel(1, oklch(0% 0 0 / 0.08));
+}
+
+.sunken-panel {
+  box-shadow: --bevel(3, oklch(0% 0 0 / 0.15));
+}
+
+.lit-from-top {
+  box-shadow: --bevel(2, oklch(0% 0 0 / 0.1), 270deg);
+}</code>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-item" style="box-shadow: --bevel(1); background: #f8f9fa;">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 1</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Subtle inset</div>
+      </div>
+      <div class="demo-item" style="box-shadow: --bevel(2); background: #f8f9fa;">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 2</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Pressed button</div>
+      </div>
+      <div class="demo-item" style="box-shadow: --bevel(3); background: #f8f9fa;">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 3</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Input field</div>
+      </div>
+      <div class="demo-item" style="box-shadow: --bevel(4); background: #f8f9fa;">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 4</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Deep recess</div>
+      </div>
+      <div class="demo-item" style="box-shadow: --bevel(5); background: #f8f9fa;">
+        <div style="font-weight: 600; margin-bottom: --space(2);">Level 5</div>
+        <div style="font-size: 0.875rem; color: var(--muted-text-color);">Maximum depth</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-group">
+    <h3>Interactive Demo</h3>
+    <div class="code-block">
+      <code>.button {
+  box-shadow: --bevel(<span id="bevel-level-val">3</span>, oklch(0% 0 0 / 0.15), <span id="bevel-angle-val">90</span>deg);
+}</code>
+    </div>
+    <div id="bevel-demo" style="width: 200px; height: 200px; margin: 2rem auto; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: --bevel(3, oklch(0% 0 0 / 0.15), 90deg);">
+      <div style="font-weight: 600; text-align: center;">Interactive<br>Bevel</div>
+    </div>
+    <div style="display: grid; gap: 0.75rem; font-size: 0.875rem; max-width: 400px; margin: 0 auto;">
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Level:</span>
+        <input type="range" id="bevel-level" min="1" max="5" value="3" style="flex: 1;">
+        <span style="min-width: 60px; text-align: right;" id="bevel-level-display">3</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Angle:</span>
+        <input type="range" id="bevel-angle" min="0" max="360" value="90" style="flex: 1;">
+        <span style="min-width: 60px; text-align: right;" id="bevel-angle-display">90°</span>
+      </label>
+      <div style="font-size: 0.8rem; color: var(--muted-text-color); margin-top: 0.5rem;">
+        <strong>Common angles:</strong> 90° (lit from bottom), 270° (lit from top), 180° (lit from left), 0° (lit from right), 315° (lit from top-right)
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const demo = document.getElementById('bevel-demo');
+  const level = document.getElementById('bevel-level');
+  const angle = document.getElementById('bevel-angle');
+
+  function update() {
+    const l = level.value;
+    const a = angle.value;
+    demo.style.boxShadow = `--bevel(${l}, oklch(0% 0 0 / 0.15), ${a}deg)`;
+    document.getElementById('bevel-level-val').textContent = l;
+    document.getElementById('bevel-level-display').textContent = l;
+    document.getElementById('bevel-angle-val').textContent = a;
+    document.getElementById('bevel-angle-display').textContent = a + '°';
+  }
+
+  level.oninput = angle.oninput = update;
+})();
+</script>
+

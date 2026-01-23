@@ -37,14 +37,19 @@
   --ratio-h <number>: 9
 ) returns <length>{result:calc(var(--width) * var(--ratio-h) / var(--ratio-w))}@function --shadow(
   --level <number>,
-  --color <color>: oklch(0% 0 0 / 0.1)
-){--y:calc(var(--level) * 2px);--blur:calc(var(--level) * 4px);--spread:calc(var(--level) * -1px);result:0 var(--y) var(--blur) var(--spread) var(--color),0 calc(var(--y) * .5) calc(var(--blur) * .5) calc(var(--spread) * .5) var(--color)}@function --diagonal-lines(
+  --color <color>: oklch(0% 0 0 / 0.1),
+  --angle <angle>: 90deg
+){--distance:calc(var(--level) * 2px);--x:calc(var(--distance) * cos(var(--angle)));--y:calc(var(--distance) * sin(var(--angle)));--blur:calc(var(--level) * 4px);--spread:calc(var(--level) * -1px);result:var(--x) var(--y) var(--blur) var(--spread) var(--color),calc(var(--x) * .5) calc(var(--y) * .5) calc(var(--blur) * .5) calc(var(--spread) * .5) var(--color)}@function --bevel(
+  --level <number>,
+  --color <color>: oklch(0% 0 0 / 0.1),
+  --angle <angle>: 90deg
+){--distance:calc(var(--level) * 2px);--x:calc(var(--distance) * cos(var(--angle)));--y:calc(var(--distance) * sin(var(--angle)));--blur:calc(var(--level) * 4px);--spread:calc(var(--level) * -1px);result:inset var(--x) var(--y) var(--blur) var(--spread) var(--color),inset calc(var(--x) * .5) calc(var(--y) * .5) calc(var(--blur) * .5) calc(var(--spread) * .5) var(--color)}@function --diagonal-lines(
   --angle <angle>: -45deg,
   --line-color <color>: currentColor,
   --line-width <length>: 1px,
   --gap-width <length>: 4px,
   --gap-color <color>: transparent
-) returns <image>{result:repeating-linear-gradient(var(--angle),var(--line-color) 0,var(--line-color) calc(var(--line-width) - 1px),var(--gap-color) calc(var(--line-width) + 1px),var(--gap-color) calc(var(--line-width) + var(--gap-width)))}@function --z(--layer <number>) returns <integer>{result:calc(var(--layer) * 100)}@function --neg(--value <length>) returns <length>{result:calc(var(--value) * -1)}@function --lerp(
+) returns <image>{result:repeating-linear-gradient(var(--angle),var(--line-color) 0,var(--line-color) calc(var(--line-width) - 1px),var(--gap-color) calc(var(--line-width) + 1px),var(--gap-color) calc(var(--line-width) + var(--gap-width)))}@function --neg(--value <length>) returns <length>{result:calc(var(--value) * -1)}@function --lerp(
   --a <length-percentage>,
   --b <length-percentage>,
   --t <number>: 0.5

@@ -2,9 +2,11 @@
  * --shadow() — Elevation Shadows
  *
  * Generates layered box-shadows based on elevation level (1-5).
+ * Optionally control shadow direction with angle parameter.
  *
  * @param {number} --level - Elevation level (1-5)
  * @param {color} --color - Shadow color, default: oklch(0% 0 0 / 0.1)
+ * @param {angle} --angle - Shadow direction angle, default: 90deg (downward)
  * @returns {string} - Layered box-shadow value (comma-separated shadow list)
  *
  * @example
@@ -14,17 +16,23 @@
  * .modal {
  *   box-shadow: --shadow(5, oklch(0% 0 0 / 0.25));
  * }
+ * .lit-from-top-right {
+ *   box-shadow: --shadow(3, oklch(0% 0 0 / 0.15), 135deg);
+ * }
  */
 
 @function --shadow(
   --level <number>,
-  --color <color>: oklch(0% 0 0 / 0.1)
+  --color <color>: oklch(0% 0 0 / 0.1),
+  --angle <angle>: 90deg
 ) {
-  --y: calc(var(--level) * 2px);
+  --distance: calc(var(--level) * 2px);
+  --x: calc(var(--distance) * cos(var(--angle)));
+  --y: calc(var(--distance) * sin(var(--angle)));
   --blur: calc(var(--level) * 4px);
   --spread: calc(var(--level) * -1px);
   result:
-    0 var(--y) var(--blur) var(--spread) var(--color),
-    0 calc(var(--y) * 0.5) calc(var(--blur) * 0.5) calc(var(--spread) * 0.5) var(--color);
+    var(--x) var(--y) var(--blur) var(--spread) var(--color),
+    calc(var(--x) * 0.5) calc(var(--y) * 0.5) calc(var(--blur) * 0.5) calc(var(--spread) * 0.5) var(--color);
 }
 

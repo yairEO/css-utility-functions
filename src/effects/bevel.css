@@ -1,0 +1,38 @@
+/**
+ * --bevel() — Inset Elevation Shadows
+ *
+ * Generates layered inset box-shadows for embossed/debossed effects based on level (1-5).
+ * Creates a recessed appearance ideal for pressed buttons, input fields, and sunken UI elements.
+ * Optionally control light source direction with angle parameter.
+ *
+ * @param {number} --level - Elevation level (1-5)
+ * @param {color} --color - Shadow color, default: oklch(0% 0 0 / 0.1)
+ * @param {angle} --angle - Light source direction angle, default: 90deg (lit from bottom)
+ * @returns {string} - Layered inset box-shadow value (comma-separated shadow list)
+ *
+ * @example
+ * .pressed-button {
+ *   box-shadow: --bevel(2);
+ * }
+ * .input-field {
+ *   box-shadow: --bevel(1, oklch(0% 0 0 / 0.08));
+ * }
+ * .lit-from-top {
+ *   box-shadow: --bevel(2, oklch(0% 0 0 / 0.1), 270deg);
+ * }
+ */
+
+@function --bevel(
+  --level <number>,
+  --color <color>: oklch(0% 0 0 / 0.1),
+  --angle <angle>: 90deg
+) {
+  --distance: calc(var(--level) * 2px);
+  --x: calc(var(--distance) * cos(var(--angle)));
+  --y: calc(var(--distance) * sin(var(--angle)));
+  --blur: calc(var(--level) * 4px);
+  --spread: calc(var(--level) * -1px);
+  result:
+    inset var(--x) var(--y) var(--blur) var(--spread) var(--color),
+    inset calc(var(--x) * 0.5) calc(var(--y) * 0.5) calc(var(--blur) * 0.5) calc(var(--spread) * 0.5) var(--color);
+}

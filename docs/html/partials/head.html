@@ -45,7 +45,7 @@
     align-items: center;
     justify-content: flex-end;
     padding: 0 --space(6);
-    z-index: --z(4);
+    z-index: 400;
     box-shadow: --shadow(1);
   }
 
@@ -102,7 +102,7 @@
     border-right: 1px solid var(--border-color);
     overflow-y: auto;
     padding: --space(4);
-    z-index: --z(3);
+    z-index: 300;
 
     & h2 {
       font-size: --fluid(1rem, 1.25rem);
@@ -177,6 +177,13 @@
 
     &:last-child {
       border-bottom: none;
+    }
+
+    & header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: --space(4);
     }
 
     & h1 {

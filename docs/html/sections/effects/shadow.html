@@ -1,5 +1,8 @@
 <section id="shadow" class="function-section">
-  <h1><a href="#shadow">--shadow()</a></h1>
+  <header>
+    <h1><a href="#shadow">--shadow()</a></h1>
+    <a href="https://github.com/yairEO/css-utility-functions/blob/main/src/effects/shadow.css" target="_blank">Source code</a>
+  </header>
   <p class="function-description">
     Elevation shadows based on level (1-5). Generates layered box-shadows for depth and elevation. Higher levels create more pronounced shadows.
   </p>
@@ -13,6 +16,9 @@
       <li style="margin-bottom: --space(2);">
         <code style="font-weight: 600;">--color</code> <span style="color: var(--optional-color);">(optional)</span> — Shadow color. Default: <code>oklch(0% 0 0 / 0.1)</code>.
       </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--angle</code> <span style="color: var(--optional-color);">(optional)</span> — Shadow direction angle. Default: <code>90deg</code> (downward). Use <code>135deg</code> for bottom-right, <code>270deg</code> for upward.
+      </li>
     </ul>
   </div>
 
@@ -25,6 +31,14 @@
 
 .modal {
   box-shadow: --shadow(5, oklch(0% 0 0 / 0.25));
+}
+
+.lit-from-top-right {
+  box-shadow: --shadow(3, oklch(0% 0 0 / 0.15), 135deg);
+}
+
+.lit-from-left {
+  box-shadow: --shadow(2, oklch(0% 0 0 / 0.1), 180deg);
 }</code>
     </div>
     <div class="demo-grid">
@@ -50,5 +64,52 @@
       </div>
     </div>
   </div>
+
+  <div class="example-group">
+    <h3>Interactive Demo</h3>
+    <div class="code-block">
+      <code>.card {
+  box-shadow: --shadow(<span id="shadow-level-val">3</span>, oklch(0% 0 0 / 0.15), <span id="shadow-angle-val">90</span>deg);
+}</code>
+    </div>
+    <div id="shadow-demo" style="width: 200px; height: 200px; margin: 2rem auto; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: --shadow(3, oklch(0% 0 0 / 0.15), 90deg);">
+      <div style="font-weight: 600; text-align: center;">Interactive<br>Shadow</div>
+    </div>
+    <div style="display: grid; gap: 0.75rem; font-size: 0.875rem; max-width: 400px; margin: 0 auto;">
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Level:</span>
+        <input type="range" id="shadow-level" min="1" max="5" value="3" style="flex: 1;">
+        <span style="min-width: 60px; text-align: right;" id="shadow-level-display">3</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Angle:</span>
+        <input type="range" id="shadow-angle" min="0" max="360" value="90" style="flex: 1;">
+        <span style="min-width: 60px; text-align: right;" id="shadow-angle-display">90°</span>
+      </label>
+      <div style="font-size: 0.8rem; color: var(--muted-text-color); margin-top: 0.5rem;">
+        <strong>Common angles:</strong> 0° (right), 90° (down), 180° (left), 270° (up), 135° (bottom-right), 315° (top-right)
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+(function() {
+  const demo = document.getElementById('shadow-demo');
+  const level = document.getElementById('shadow-level');
+  const angle = document.getElementById('shadow-angle');
+
+  function update() {
+    const l = level.value;
+    const a = angle.value;
+    demo.style.boxShadow = `--shadow(${l}, oklch(0% 0 0 / 0.15), ${a}deg)`;
+    document.getElementById('shadow-level-val').textContent = l;
+    document.getElementById('shadow-level-display').textContent = l;
+    document.getElementById('shadow-angle-val').textContent = a;
+    document.getElementById('shadow-angle-display').textContent = a + '°';
+  }
+
+  level.oninput = angle.oninput = update;
+})();
+</script>
 

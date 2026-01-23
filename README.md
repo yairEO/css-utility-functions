@@ -145,25 +145,42 @@ Calculate height from width and aspect ratio.
 ### Visual Effects
 
 #### `--shadow()`
-Elevation shadows based on level (1-5).
+Elevation shadows based on level (1-5). Optionally control shadow direction with angle parameter.
 
 ```css
 .card {
   box-shadow: --shadow(2);
+}
+
+.lit-from-top-right {
+  box-shadow: --shadow(3, oklch(0% 0 0 / 0.15), 135deg);
+}
+
+.lit-from-left {
+  box-shadow: --shadow(2, oklch(0% 0 0 / 0.1), 180deg);
+}
+```
+
+#### `--bevel()`
+Inset elevation shadows for embossed/debossed effects. Optionally control light source direction with angle parameter.
+
+```css
+.pressed-button {
+  box-shadow: --bevel(2);
+}
+
+.lit-from-top {
+  box-shadow: --bevel(2, oklch(0% 0 0 / 0.1), 270deg);
+}
+
+.input-field {
+  box-shadow: --bevel(1, oklch(0% 0 0 / 0.08), 90deg);
 }
 ```
 
 ---
 
 ### Layout Utilities
-
-#### `--z()`
-Semantic z-index scale (avoids magic numbers).
-
-```css
-.modal { z-index: --z(5); }     /* 500 */
-.tooltip { z-index: --z(7); }   /* 700 */
-```
 
 #### `--neg()`
 Negate a value (useful for negative margins).
@@ -212,9 +229,9 @@ Convert between pixels and rem (assumes 16px base).
 | `--ratio-height()` | Aspect ratio calc | `--ratio-height(100px, 16, 9)` |
 | **Visual Effects** |||
 | `--shadow()` | Elevation shadows | `--shadow(3)` |
+| `--bevel()` | Inset shadows (emboss/deboss) | `--bevel(2)` |
 | `--diagonal-lines()` | Diagonal line pattern | `--diagonal-lines(--angle: 45deg)` |
 | **Layout Utilities** |||
-| `--z()` | Z-index layers | `--z(5)` → `500` |
 | `--neg()` | Negate value | `--neg(2rem)` → `-2rem` |
 | **Math Utilities** |||
 | `--lerp()` | Linear interpolation | `--lerp(100px, 500px, 0.5)` |

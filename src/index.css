@@ -28,10 +28,10 @@
 
 /* Visual Effects */
 @import './effects/shadow.css';
+@import './effects/bevel.css';
 @import './effects/diagonal-lines.css';
 
 /* Layout Utilities */
-@import './layout/z-index.css';
 @import './layout/neg.css';
 
 /* Math Utilities */
