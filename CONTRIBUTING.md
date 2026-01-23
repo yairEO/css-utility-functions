@@ -50,7 +50,7 @@ css-utility-functions/
    - `colors/` - Color manipulation (lighten, darken, mix, etc.)
    - `spacing/` - Spacing and sizing utilities
    - `effects/` - Visual effects (shadows, patterns, etc.)
-   - `layout/` - Layout utilities (z-index, positioning, etc.)
+   - `layout/` - Layout utilities (positioning, etc.)
    - `math/` - Mathematical operations
    - `units/` - Unit conversions
    - `logic/` - Boolean/logical operations
@@ -110,7 +110,10 @@ Add your function import in the appropriate section:
 
 ```html
 <section id="my-function" class="function-section">
-  <h1><a href="#my-function">--my-function()</a></h1>
+  <header>
+    <h1><a href="#my-function">--my-function()</a></h1>
+    <a href="https://github.com/yairEO/css-utility-functions/blob/main/src/colors/my-function.css" target="_blank">Source code</a>
+  </header>
   <p class="function-description">
     Brief description of what the function does and when to use it.
   </p>
@@ -177,7 +180,11 @@ Add your function to `docs/html/partials/sidebar.html`:
 
 1. **Edit the CSS file** in `src/[category]/function-name.css`
 2. **Update the JSDoc comment** if parameters or behavior changed
-3. **Update documentation** in `docs/html/sections/[category]/function-name.html`
+3. **Update documentation HTML file** in `docs/html/sections/[category]/function-name.html`:
+   - Update function description if behavior changed
+   - Update examples if they no longer reflect current behavior
+   - Update interactive demos if applicable
+   - Ensure the header's source code link is correct
 4. **Rebuild** to verify changes:
    ```bash
    npm run build:all
@@ -187,11 +194,23 @@ Add your function to `docs/html/partials/sidebar.html`:
 
 If you change parameters or return types:
 
-1. Update the `@function` declaration
-2. Update JSDoc `@param` and `@returns` comments
-3. Update documentation HTML with new parameter descriptions
-4. Update all examples in documentation
-5. Consider backward compatibility (use optional parameters for additions)
+1. **Update the `@function` declaration** in `src/[category]/function-name.css`
+2. **Update JSDoc `@param` and `@returns` comments** in the CSS file
+3. **Update documentation HTML file** at `docs/html/sections/[category]/function-name.html`:
+   - Update the function description if behavior changed
+   - Update the Parameters section with new parameter descriptions, types, and defaults
+   - Update the `<header>` section to ensure the source code link points to the correct file:
+     ```html
+     <header>
+       <h1><a href="#function-name">--function-name()</a></h1>
+       <a href="https://github.com/yairEO/css-utility-functions/blob/main/src/[category]/function-name.css" target="_blank">Source code</a>
+     </header>
+     ```
+   - Update all code examples in the "Basic Usage" and "Examples" sections
+   - Update interactive demos if parameters changed
+   - Ensure examples reflect the new signature accurately
+4. **Check consistency** - Review similar functions in the same category to maintain consistent documentation style
+5. **Consider backward compatibility** - Use optional parameters for additions rather than breaking changes
 
 ---
 
@@ -238,15 +257,26 @@ Every function **must** include:
 
 Every function **must** have:
 
-1. **Function description** - Clear, concise explanation
-2. **Parameters section** - List all parameters with:
+1. **Header section** - Must include:
+   - `<header>` wrapper containing the `<h1>` title
+   - Source code link pointing to the correct GitHub file:
+     ```html
+     <header>
+       <h1><a href="#function-name">--function-name()</a></h1>
+       <a href="https://github.com/yairEO/css-utility-functions/blob/main/src/[category]/function-name.css" target="_blank">Source code</a>
+     </header>
+     ```
+2. **Function description** - Clear, concise explanation
+3. **Parameters section** - List all parameters with:
    - Required/optional indicator
    - Type information
    - Default values
    - Clear descriptions
-3. **Basic usage example** - Simple, practical example
-4. **Additional examples** - Show edge cases, variations, or advanced usage
-5. **Interactive demos** (if applicable) - Use the demo system for visual functions
+4. **Basic usage example** - Simple, practical example
+5. **Additional examples** - Show edge cases, variations, or advanced usage
+6. **Interactive demos** (if applicable) - Use the demo system for visual functions
+
+**Important**: All documentation files are located in `docs/html/sections/[category]/` and must follow this structure. See existing files like `docs/html/sections/colors/alpha.html` for reference.
 
 ---
 
