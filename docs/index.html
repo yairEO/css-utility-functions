@@ -430,6 +430,7 @@
       <li><a href="#shadow" data-function="shadow">--shadow()</a></li>
       <li><a href="#bevel" data-function="bevel">--bevel()</a></li>
       <li><a href="#diagonal-lines" data-function="diagonal-lines">--diagonal-lines()</a></li>
+      <li><a href="#polka-dots" data-function="polka-dots">--polka-dots()</a></li>
 
       <li class="category-header">Layout Utilities</li>
       <li><a href="#neg" data-function="neg">--neg()</a></li>
@@ -1753,6 +1754,106 @@
 })();
 </script>
 
+
+      <section id="polka-dots" class="function-section">
+  <header>
+    <h1><a href="#polka-dots">--polka-dots()</a></h1>
+    <a href="https://github.com/yairEO/css-utility-functions/blob/main/src/effects/polka-dots.css" target="_blank">Source code</a>
+  </header>
+  <p class="function-description">
+    Generate a repeating polka dot pattern using two offset radial-gradient layers. Returns a complete background value that can be used directly as a <code>background</code> property value.
+  </p>
+
+  <div class="parameters-section" style="margin: --space(4) 0;">
+    <h3>Parameters</h3>
+    <ul style="list-style: none; padding: 0; margin: --space(2) 0;">
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--dot-color</code> <span style="color: var(--optional-color);">(optional)</span> — Color of the dots. Default: <code>currentColor</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--dot-size</code> <span style="color: var(--optional-color);">(optional)</span> — Size of each dot; accepts <code>px</code> or <code>%</code>. Default: <code>20%</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--spacing</code> <span style="color: var(--optional-color);">(optional)</span> — Half the tile size; controls dot density. Default: <code>5px</code>.
+      </li>
+      <li style="margin-bottom: --space(2);">
+        <code style="font-weight: 600;">--bg-color</code> <span style="color: var(--optional-color);">(optional)</span> — Background color between dots. Default: <code>transparent</code>.
+      </li>
+    </ul>
+  </div>
+
+  <div class="example-group">
+    <h3>Interactive Demo</h3>
+    <div class="code-block">
+      <code>.polka-bg {
+  background: --polka-dots(
+    --dot-color: <span id="polka-dot-color-val">#3b82f6</span>,
+    --dot-size: <span id="polka-dot-size-val">2</span>px,
+    --spacing: <span id="polka-spacing-val">8</span>px,
+    --bg-color: <span id="polka-bg-color-val">transparent</span>
+  );
+}</code>
+    </div>
+    <div id="polka-demo" style="height: 150px; border-radius: 4px; margin-bottom: 1rem;"></div>
+    <div style="display: grid; gap: 0.75rem; font-size: 0.875rem;">
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Dot Color:</span>
+        <input type="color" id="polka-dot-color" value="#3b82f6" style="width: 50px; height: 30px;">
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Dot Size:</span>
+        <input type="range" id="polka-dot-size" min="1" max="20" value="2" style="flex: 1;">
+        <span style="min-width: 50px; text-align: right;" id="polka-dot-size-display">2px</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Spacing:</span>
+        <input type="range" id="polka-spacing" min="3" max="30" value="8" style="flex: 1;">
+        <span style="min-width: 50px; text-align: right;" id="polka-spacing-display">8px</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="min-width: 100px;">Bg Color:</span>
+        <input type="color" id="polka-bg-color" value="#ffffff" style="width: 50px; height: 30px;">
+        <input type="checkbox" id="polka-transparent" checked style="margin-left: 0.5rem;">
+        <span>Transparent</span>
+      </label>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const demo = document.getElementById('polka-demo');
+  const dotColor = document.getElementById('polka-dot-color');
+  const dotSize = document.getElementById('polka-dot-size');
+  const spacing = document.getElementById('polka-spacing');
+  const bgColor = document.getElementById('polka-bg-color');
+  const transparent = document.getElementById('polka-transparent');
+
+  function update() {
+    const dc = dotColor.value;
+    const ds = +dotSize.value;
+    const sp = +spacing.value;
+    const bc = transparent.checked ? 'transparent' : bgColor.value;
+    const tile = sp * 2;
+    const feather = 1 / (window.devicePixelRatio || 1);
+
+    demo.style.background = [
+      `radial-gradient(${dc} calc(${ds}px - ${feather}px), ${bc} ${ds}px) 0 0 / ${tile}px ${tile}px`,
+      `radial-gradient(${dc} calc(${ds}px - ${feather}px), ${bc} ${ds}px) ${sp}px ${sp}px / ${tile}px ${tile}px`
+    ].join(', ');
+
+    document.getElementById('polka-dot-color-val').textContent = dc;
+    document.getElementById('polka-dot-size-val').textContent = ds;
+    document.getElementById('polka-dot-size-display').textContent = ds + 'px';
+    document.getElementById('polka-spacing-val').textContent = sp;
+    document.getElementById('polka-spacing-display').textContent = sp + 'px';
+    document.getElementById('polka-bg-color-val').textContent = bc;
+  }
+
+  dotColor.oninput = dotSize.oninput = spacing.oninput = bgColor.oninput = transparent.onchange = update;
+  update();
+})();
+</script>
 
 
       <section id="neg" class="function-section">

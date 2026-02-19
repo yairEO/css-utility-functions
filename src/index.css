@@ -30,6 +30,7 @@
 @import './effects/shadow.css';
 @import './effects/bevel.css';
 @import './effects/diagonal-lines.css';
+@import './effects/polka-dots.css';
 
 /* Layout Utilities */
 @import './layout/neg.css';

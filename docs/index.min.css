@@ -1,5 +1,5 @@
 /**
- * CSS Utility Functions v1.1.0
+ * CSS Utility Functions v1.1.1
  * Author: Yair Even-Or
  * Repository: https://github.com/yairEO/css-utility-functions
  *
@@ -49,7 +49,12 @@
   --line-width <length>: 1px,
   --gap-width <length>: 4px,
   --gap-color <color>: transparent
-) returns <image>{result:repeating-linear-gradient(var(--angle),var(--line-color) 0,var(--line-color) calc(var(--line-width) - 1px),var(--gap-color) calc(var(--line-width) + 1px),var(--gap-color) calc(var(--line-width) + var(--gap-width)))}@function --neg(--value <length>) returns <length>{result:calc(var(--value) * -1)}@function --lerp(
+) returns <image>{result:repeating-linear-gradient(var(--angle),var(--line-color) 0,var(--line-color) calc(var(--line-width) - 1px),var(--gap-color) calc(var(--line-width) + 1px),var(--gap-color) calc(var(--line-width) + var(--gap-width)))}@function --polka-dots(
+  --dot-color <color>: currentColor,
+  --dot-size <length-percentage>: 20%,
+  --spacing <length>: 5px,
+  --bg-color <color>: transparent
+) returns <image>{result:radial-gradient(var(--dot-color) calc(var(--dot-size) - 1px),var(--bg-color) var(--dot-size)) 0 0 /calc(var(--spacing) * 2) calc(var(--spacing) * 2),radial-gradient(var(--dot-color) calc(var(--dot-size) - 1px),var(--bg-color) var(--dot-size)) var(--spacing) var(--spacing) /calc(var(--spacing) * 2) calc(var(--spacing) * 2)}@function --neg(--value <length>) returns <length>{result:calc(var(--value) * -1)}@function --lerp(
   --a <length-percentage>,
   --b <length-percentage>,
   --t <number>: 0.5

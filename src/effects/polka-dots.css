@@ -1,0 +1,51 @@
+/**
+ * --polka-dots() — Polka Dot Pattern Background
+ *
+ * Generate a repeating polka dot pattern using two offset radial-gradient layers.
+ * Returns a complete background value (image + position + size) that can be used
+ * directly as a background property value.
+ *
+ * @param {color} --dot-color - Color of the dots, default: currentColor
+ * @param {length-percentage} --dot-size - Size of each dot; accepts px or %. A 1px feather zone
+ *   is applied at the edge for anti-aliasing. Default: 20%
+ * @param {length} --spacing - Half the tile size; controls dot density, default: 5px
+ * @param {color} --bg-color - Background color between dots, default: transparent
+ * @returns {image} - Complete two-layer radial-gradient background value
+ *
+ * @example
+ * .polka-bg {
+ *   background: --polka-dots();
+ * }
+ *
+ * @example
+ * .custom-dots {
+ *   background: --polka-dots(
+ *     --dot-color: #3b82f6,
+ *     --spacing: 10px,
+ *     --dot-size: 30%
+ *   );
+ * }
+ *
+ * @example
+ * .subtle-dots {
+ *   color: #94a3b8;
+ *   background: --polka-dots(
+ *     --dot-color: currentColor,
+ *     --spacing: 8px,
+ *     --dot-size: 15%
+ *   );
+ * }
+ */
+
+@function --polka-dots(
+  --dot-color <color>: currentColor,
+  --dot-size <length-percentage>: 20%,
+  --spacing <length>: 5px,
+  --bg-color <color>: transparent
+) returns <image> {
+  result:
+    radial-gradient(var(--dot-color) calc(var(--dot-size) - 1px), var(--bg-color) var(--dot-size))
+      0 0 / calc(var(--spacing) * 2) calc(var(--spacing) * 2),
+    radial-gradient(var(--dot-color) calc(var(--dot-size) - 1px), var(--bg-color) var(--dot-size))
+      var(--spacing) var(--spacing) / calc(var(--spacing) * 2) calc(var(--spacing) * 2);
+}

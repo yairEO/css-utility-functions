@@ -178,6 +178,23 @@ Inset elevation shadows for embossed/debossed effects. Optionally control light 
 }
 ```
 
+#### `--polka-dots()`
+Repeating polka dot pattern background using two offset radial-gradient layers.
+
+```css
+.polka-bg {
+  background: --polka-dots();
+}
+
+.custom-dots {
+  background: --polka-dots(
+    --dot-color: #3b82f6,
+    --spacing: 10px,
+    --dot-size: 30%
+  );
+}
+```
+
 ---
 
 ### Layout Utilities
@@ -231,6 +248,7 @@ Convert between pixels and rem (assumes 16px base).
 | `--shadow()` | Elevation shadows | `--shadow(3)` |
 | `--bevel()` | Inset shadows (emboss/deboss) | `--bevel(2)` |
 | `--diagonal-lines()` | Diagonal line pattern | `--diagonal-lines(--angle: 45deg)` |
+| `--polka-dots()` | Polka dot pattern | `--polka-dots(--dot-color: black, --spacing: 8px)` |
 | **Layout Utilities** |||
 | `--neg()` | Negate value | `--neg(2rem)` → `-2rem` |
 | **Math Utilities** |||
